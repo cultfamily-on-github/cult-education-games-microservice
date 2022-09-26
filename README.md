@@ -1,4 +1,8 @@
-# CULT Resources Microservice
+# CULT Education Games Microservice
+
+Play 2 Earn is inspired by [Revolt 2 Earn](https://rumble.com/v1lf3yb-revolt-2-earn-in-100-seconds-michael-saylor-talks-about-revolt-2-earn.html?mref=1e5w3p&mc=4izal). 
+
+Play 2 Earn allows for "micro acts of revolt" while exploring and supporting the emergence of manifold architectures of freedom.
 
 In order to strengthen resilience, scalability and technological freedom for contributors, we establish a microservices architecture. 
 
