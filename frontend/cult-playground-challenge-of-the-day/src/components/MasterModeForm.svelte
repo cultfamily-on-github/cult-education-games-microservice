@@ -6,12 +6,24 @@
   import RatingSelect from './RatingSelect.svelte'
 
   let text = ''
+  let masterKey = ''
   let rating = 10
   let btnDisabled = true
   let min = 10
   let message
 
   const handleSelect = e => rating = e.detail
+
+  const handleMasterKey = () => {
+    if(text.trim().length <= 42) {
+      message = `Masterkey must be at least 42 characters`
+      btnDisabled = true
+    } else {
+      message = null
+      btnDisabled = false
+    }
+
+  }
 
   const handleInput = () => {
     if(text.trim().length <= min) {
@@ -43,14 +55,19 @@
 
 <Card>
   <header>
-    <h2>Please enter your CULT Game Proposal.</h2>
+    <h2>Master Mode</h2>
   </header>
 <form on:submit|preventDefault={handleSubmit}>
-  <RatingSelect on:rating-select={handleSelect} />
+  <!-- <RatingSelect on:rating-select={handleSelect} /> -->
   <div class="input-group">
-    <input type="text" on:input={handleInput} bind:value = {text} placeholder="Tell us something that keeps you coming back">
-    <Button disabled={btnDisabled} type="submit">Send</Button>
+    <input type="text" on:input={handleInput} bind:value = {masterKey} placeholder="Please enter your Masterkey">
   </div>
+  
+  <div class="input-group">
+    <input type="text" on:input={handleInput} bind:value = {text} placeholder="Please enter your Challenge of the Day Proposal">
+  </div>
+  <p><br></p>
+  <Button disabled={btnDisabled} type="submit">Send</Button>
   {#if message}
     <div class="message">
       {message}
