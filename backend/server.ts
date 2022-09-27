@@ -17,7 +17,7 @@ if (Deno.args[0].indexOf(443) === -1) {
 	app.listen(port, () => console.log(`server has started on http://localhost:${port} 🚀`));
 } else {
 
-	const pathToCertificates = '/etc/letsencrypt/live/cultresources.org';
+	const pathToCertificates = '/etc/letsencrypt/live/cultplayground.org';
     const pathToCertFile = `${pathToCertificates}/fullchain.pem`
     const pathToKeyFile = `${pathToCertificates}/privkey.pem`
 

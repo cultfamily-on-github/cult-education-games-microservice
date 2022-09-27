@@ -1,31 +1,30 @@
 <script>
-  export let style = 'primary'
+  export let onChange;
   export let type = 'button'
   export let disabled = false
+  export let showDetails = false
+  
+  $: onChange(showDetails)
+
+  function clickShowDetails() {
+    showDetails = !showDetails
+  }
+  
 </script>
 
-<button {type} {disabled} class={style}>
+<button {type} {disabled} on:click={clickShowDetails}>
   <slot></slot>
 </button>
 
 
 <style>
   button {
-    color: #fff;
+    color: black;
     border: 0;
     border-radius: 8px;
-    color: #fff;
-    width: 100px;
+    width: 100%;
     height: 40px;
     cursor: pointer;
-  }
-
-  .primary {
-    background-color: #202142;
-  }
-
-  .secondary {
-    background: #ff6a95;
   }
 
   button:hover {

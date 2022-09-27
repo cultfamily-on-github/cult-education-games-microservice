@@ -2,7 +2,7 @@
   import {v4 as uuidv4} from 'uuid'
   import {CultGameProposalStore} from '../stores'
   import Card from './Card.svelte'
-  import Button from './Button.svelte'
+  import Button from './SendButton.svelte'
   import RatingSelect from './RatingSelect.svelte'
 
   let text = ''
