@@ -1,8 +1,8 @@
 <script>
-  import ShowDetailsButton from "./components/ShowDetailsButton.svelte";
-  import FeedbackForm from "./components/FeedbackForm.svelte";
-  import FeedbackList from "./components/FeedbackList.svelte";
-  import FeedbackStats from "./components/FeedbackStats.svelte";
+  import ShowDetailsButton from "./components/buttons/ShowDetailsButton.svelte";
+  // import FeedbackForm from "./components/feedbackComponents/FeedbackForm.svelte";
+  // import FeedbackList from "./components/FeedbackList.svelte";
+  // import FeedbackStats from "./components/FeedbackStats.svelte";
   import GameOfTheDay from "./components/GameOfTheDay.svelte";
   import HowItWorks from "./components/HowItWorks.svelte";
   import Levels from "./components/Levels.svelte";
@@ -21,14 +21,15 @@
 
     {#if showDetailsInParent}
       <HowItWorks />
-      <Motivation />
-      <FeedbackForm />
-      <FeedbackList />
-      <FeedbackStats />
-      <SupportOrGiveFeedbackRequest />
     {/if}
-  </div>
-</main>
+      <Motivation />
+      <SupportOrGiveFeedbackRequest />
+    </div>
+  </main>
+  
+  <!-- <FeedbackForm />
+  <FeedbackList />
+  <FeedbackStats /> -->
 
 <style>
-</style>
+  </style>
