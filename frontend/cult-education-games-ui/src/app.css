@@ -7,7 +7,8 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arial';
+  font-size: large;
   background-color: #202142;
   line-height: 1.6;
   color: #fff;
@@ -21,6 +22,16 @@ ul {
   max-width: 768px;
   margin: 100px auto;
   padding: 0 20px;
+}
+
+a {
+  color: white;
+}
+
+.text-center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 
