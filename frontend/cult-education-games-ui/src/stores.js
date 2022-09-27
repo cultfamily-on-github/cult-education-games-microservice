@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store'
 
-export const FeedbackStore = writable([
+export const CultGameProposalStore = writable([
   {
     id: 1,
     rating: 10,

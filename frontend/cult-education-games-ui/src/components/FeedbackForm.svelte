@@ -1,6 +1,6 @@
 <script>
   import {v4 as uuidv4} from 'uuid'
-  import {FeedbackStore} from '../stores'
+  import {CultGameProposalStore} from '../stores'
   import Card from './Card.svelte'
   import Button from './Button.svelte'
   import RatingSelect from './RatingSelect.svelte'
@@ -31,7 +31,7 @@
         rating: +rating
       }
 
-      FeedbackStore.update((currentFeedback) => {
+      CultGameProposalStore.update((currentFeedback) => {
         return [newFeedback, ...currentFeedback]
       })
 

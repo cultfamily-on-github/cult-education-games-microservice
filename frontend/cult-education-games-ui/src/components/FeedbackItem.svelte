@@ -1,10 +1,10 @@
 <script>
-  import {FeedbackStore} from '../stores'
+  import {CultGameProposalStore} from '../stores'
   import Card from './Card.svelte'
   export let item
 
   const handleDelete = (itemId) => {
-    FeedbackStore.update((currentFeedback) => {
+    CultGameProposalStore.update((currentFeedback) => {
       return currentFeedback.filter(item => item.id != itemId)
     })
   }

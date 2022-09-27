@@ -1,8 +1,8 @@
 <script>
-  import {FeedbackStore} from '../stores'
+  import {CultGameProposalStore} from '../stores'
 
-  $: count = $FeedbackStore.length
-  $: average = $FeedbackStore.reduce((a, {rating}) => a + rating, 0) / $FeedbackStore.length
+  $: count = $CultGameProposalStore.length
+  $: average = $CultGameProposalStore.reduce((a, {rating}) => a + rating, 0) / $CultGameProposalStore.length
 </script>
 
 <div class="feedback-stats">
