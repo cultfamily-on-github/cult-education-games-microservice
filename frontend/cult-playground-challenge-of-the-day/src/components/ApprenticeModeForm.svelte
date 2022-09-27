@@ -17,6 +17,7 @@
   // })
 </script>
 
+
 {#each $CultGameProposalStore as fb (fb.id)}
 <div in:scale out:fade="{{ duration: 500 }}">
   <GameProposalItem item={fb} />
