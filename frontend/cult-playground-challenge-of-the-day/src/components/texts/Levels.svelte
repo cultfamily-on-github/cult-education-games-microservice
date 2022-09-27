@@ -1,6 +1,5 @@
 <p><br></p>
-<h2>Levels</h2>
-<p><br></p>
+<h2>Levels</h2> <br>
 1. Trainee: <br>
 As a trainee you can start executing the game of the day (see above). <p><br></p>
 

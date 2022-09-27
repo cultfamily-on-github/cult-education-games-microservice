@@ -1,9 +1,9 @@
 <script>
   import {v4 as uuidv4} from 'uuid'
-  import {CultGameProposalStore} from '../../stores'
-  import Card from '../Card.svelte'
-  import Button from '../buttons/SendButton.svelte'
-  import RatingSelect from '../RatingSelect.svelte'
+  import {CultGameProposalStore} from '../stores'
+  import Card from './Card.svelte'
+  import Button from './buttons/SendButton.svelte'
+  import RatingSelect from './RatingSelect.svelte'
 
   let text = ''
   let rating = 10
