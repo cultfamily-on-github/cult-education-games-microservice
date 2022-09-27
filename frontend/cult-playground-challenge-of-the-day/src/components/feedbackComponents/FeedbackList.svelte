@@ -2,7 +2,7 @@
   // import {onMount, onDestroy} from 'svelte'
   import {CultGameProposalStore} from '../stores'
   import { fade, scale } from 'svelte/transition'
-  import FeedbackItem from './FeedbackItem.svelte'
+  import GameProposalItem from './GameProposalItem.svelte'
 
   // let feedback = []
 
@@ -19,6 +19,6 @@
 
 {#each $CultGameProposalStore as fb (fb.id)}
 <div in:scale out:fade="{{ duration: 500 }}">
-  <FeedbackItem item={fb} />
+  <GameProposalItem item={fb} />
 </div>
 {/each}

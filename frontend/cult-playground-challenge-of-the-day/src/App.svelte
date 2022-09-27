@@ -4,9 +4,9 @@
   // import FeedbackList from "./components/FeedbackList.svelte";
   // import FeedbackStats from "./components/FeedbackStats.svelte";
   import GameOfTheDay from "./components/GameOfTheDay.svelte";
-  import HowItWorks from "./components/HowItWorks.svelte";
-  import Levels from "./components/Levels.svelte";
-  import Motivation from "./components/Motivation.svelte";
+  import HowItWorks from "./components/texts/HowItWorks.svelte";
+  import Levels from "./components/texts/Levels.svelte";
+  import Motivation from "./components/texts/Motivation.svelte";
   import SupportOrGiveFeedbackRequest from "./components/SupportOrGiveFeedbackRequest.svelte";
   let showDetailsInParent = true;
 </script>
