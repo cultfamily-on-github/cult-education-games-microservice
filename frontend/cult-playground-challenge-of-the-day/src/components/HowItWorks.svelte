@@ -3,7 +3,7 @@
 
 There are three levels. <p><br></p>
 1. Trainee: <br>
-As a trainee you can start executing the game of the day. <p><br></p>
+As a trainee you can start executing the game of the day (see above). <p><br></p>
 
 2. Apprentice: <br>
 As an apprentice you can still execute the game of the day. Additionally you can vote on Game of the Day Proposals.<p><br></p>
