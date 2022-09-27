@@ -1,6 +1,6 @@
 <script>
   // import {onMount, onDestroy} from 'svelte'
-  import {CultGameProposalStore} from '../stores'
+  import {CultGameOfTheDayStore} from '../stores'
   import { fade, scale } from 'svelte/transition'
   import FeedbackItem from './FeedbackItem.svelte'
 
@@ -17,7 +17,7 @@
   // })
 </script>
 
-{#each $CultGameProposalStore as fb (fb.id)}
+{#each $CultGameOfTheDayStore as fb (fb.id)}
 <div in:scale out:fade="{{ duration: 500 }}">
   <FeedbackItem item={fb} />
 </div>
