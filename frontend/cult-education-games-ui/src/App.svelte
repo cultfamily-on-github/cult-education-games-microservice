@@ -5,6 +5,7 @@
   import GameOfTheDay from "./components/GameOfTheDay.svelte";
   import HowItWorks from "./components/HowItWorks.svelte";
   import Motivation from "./components/Motivation.svelte";
+    import SupportOrGiveFeedbackRequest from "./components/SupportOrGiveFeedbackRequest.svelte";
 </script>
 
 <main class="container">
@@ -19,6 +20,7 @@
     <FeedbackForm />
     <FeedbackList />
     <FeedbackStats />
+    <SupportOrGiveFeedbackRequest />
 
   </div>
 </main>
