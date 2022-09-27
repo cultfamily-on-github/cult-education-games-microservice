@@ -5,7 +5,7 @@
   import GameOfTheDay from "./components/GameOfTheDay.svelte";
   import HowItWorks from "./components/HowItWorks.svelte";
   import Motivation from "./components/Motivation.svelte";
-    import SupportOrGiveFeedbackRequest from "./components/SupportOrGiveFeedbackRequest.svelte";
+  import SupportOrGiveFeedbackRequest from "./components/SupportOrGiveFeedbackRequest.svelte";
 </script>
 
 <main class="container">
@@ -14,9 +14,9 @@
     <h2>CULT Game Of The Day</h2>
 
     <GameOfTheDay />
+    <HowItWorks />
     
     <Motivation />
-    <HowItWorks />
     <FeedbackForm />
     <FeedbackList />
     <FeedbackStats />

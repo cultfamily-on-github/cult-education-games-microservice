@@ -1,10 +1,33 @@
-<h2>How it works</h2>
+<p><br></p>
+<h2>Rules on this Playground</h2>
+
+There are three levels. <p><br></p>
+1. Trainee: <br>
+As a trainee you can start executing the game of the day. <p><br></p>
+
+2. Apprentice: <br>
+As an apprentice you can still execute the game of the day. Additionally you can vote on Game of the Day Proposals.<p><br></p>
+
+3. Master of the Game: <br>
+As a master you can still execute the game of the day and vote on Game of the Day Proposals. 
+Additionally you can submit your own Game of the Day Proposals.
+
+
+
+<!-- <h2>Feel Free To Fork</h2>
+<p><br></p> -->
+
 <p><br><br></p>
+To become an Apprentice, please send a dm via
+<a href="https://twitter.com/Peer2PeerE" target="_blank"> Twitter</a>
+or via
+<a href="https://t.me/freedomplayer" target="_blank"> Telegram</a>. 
+<p><br></p>
 
-The CULT Family votes on which Challenge of the Day shall be executed.
-
-Everyone can submit Challenge of the Day Proposals.
-
+Depending on your track record of supporting the CULTDAO in constructive range increasing ways, 
+the host of this playground decides if you are ready for the role as apprentice or even for the role as master. <p><br></p>
+If this is too much power in the hands of the playground host from your perspective, feel free to fork the 
+<a href="https://github.com/cultfamily-on-github/cult-education-games-microservice" target="_blank"> Code Repository</a> and host your own CULT Playground.
 
 
 <p><br><br></p>
