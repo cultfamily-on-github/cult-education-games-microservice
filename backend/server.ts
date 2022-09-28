@@ -2,9 +2,13 @@ import { opine, serveStatic } from 'https://deno.land/x/opine@2.3.3/mod.ts';
 import { opineCors } from 'https://deno.land/x/cors/mod.ts';
 
 const pathToIndexHTML = `${Deno.cwd()}/docs`;
+const pathToAssets = `${pathToIndexHTML}/assets`;
 const app = opine();
+
 app.use(opineCors());
+
 app.use(serveStatic(pathToIndexHTML));
+app.use(serveStatic(pathToAssets));
 
 app.get('/', function (req, res) {
 	console.log(`serving index html from ${pathToIndexHTML}`);
