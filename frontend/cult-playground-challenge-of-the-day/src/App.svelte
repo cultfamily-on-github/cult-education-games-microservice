@@ -6,13 +6,7 @@
   import ApprenticeModeForm from "./components/ApprenticeModeForm.svelte";
   import {CultGameProposalStore} from './stores'
   import GameProposalItem from './components/GameProposalItem.svelte'
-    import Seo from "./Seo.svelte";
-
-  // import ShowApprenticeModeButton from "./components/buttons/ShowApprenticeModeButton.svelte";
-
-  // import FeedbackForm from "./components/feedbackComponents/FeedbackForm.svelte";
-  // import FeedbackList from "./components/FeedbackList.svelte";
-  // import FeedbackStats from "./components/FeedbackStats.svelte";
+  import Seo from "./Seo.svelte";
 
   let showDetails = false;
   let showPhilosophy = false;
