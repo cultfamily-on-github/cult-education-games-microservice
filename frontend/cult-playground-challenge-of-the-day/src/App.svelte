@@ -1,8 +1,4 @@
 <script>
-  import ShowDetailsButton from "./components/buttons/ShowDetailsButton.svelte";
-  import ShowPhilosophyButton from "./components/buttons/ShowPhilosophyButton.svelte";
-  import ShowMasterModeButton from "./components/buttons/ShowMasterModeButton.svelte";
-  import GameOfTheDay from "./components/GameOfTheDay.svelte";
   import Philosophy from "./components/texts/Philosophy.svelte";
   import HowItWorks from "./components/texts/HowItWorks.svelte";
   import Levels from "./components/texts/Levels.svelte";
