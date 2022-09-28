@@ -1,18 +1,30 @@
 <script>
   import { CultGameProposalStore } from "../stores";
   import Card from "./Card.svelte";
+  import RatingSelect from './RatingSelect.svelte'
+  export let mode = "";
   export let item;
 
-  const handleDelete = (itemId) => {
-    CultGameProposalStore.update((currentFeedback) => {
-      return currentFeedback.filter((item) => item.id != itemId);
-    });
+  let text = "";
+  let apprenticeKey = "";
+  let rating = 10;
+
+  const handleVoteRequest = (itemId) => {
+
+    alert(`nice try :) you can't be an apprentice yet, because this playground is just getting started.`)
+
+    // CultGameProposalStore.update((currentFeedback) => {
+    //   return currentFeedback.filter((item) => item.id != itemId);
+    // });
   };
 
-  const replace_content = (content) => {
+  const replaceContentToShowClickableLinks = (content) => {
     var exp_match =
       /(\b(https?|):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    var element_content = content.replace(exp_match, `<a class="linkInText" href='$1' target="_blank">$1</a>`);
+    var element_content = content.replace(
+      exp_match,
+      `<a class="linkInText" href='$1' target="_blank">$1</a>`
+    );
     var new_exp_match = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
     var new_content = element_content.replace(
       new_exp_match,
@@ -20,27 +32,73 @@
     );
     return new_content;
   };
+
+  const handleSubmit = () => {
+    alert("I'll handle the submit");
+    // if(text.trim().length > min) {
+    //   const newFeedback = {
+    //     id: uuidv4(),
+    //     text,
+    //     rating: +rating
+    //   }
+
+    //   CultGameProposalStore.update((currentFeedback) => {
+    //     return [newFeedback, ...currentFeedback]
+    //   })
+
+    //   text = ''
+    // }
+  };
+
+  const handleSelect = (e) => (rating = e.detail);
+
+  const handleInput = () => {
+    alert("I'll handle the submit");
+    // if(text.trim().length <= min) {
+    //   message = `Text must be at least ${min} characters`
+    //   btnDisabled = true
+    // } else {
+    //   message = null
+    //   btnDisabled = false
+    // }
+  };
 </script>
 
 <Card>
-  
   <div class="num-display">
     {item.rating}
   </div>
 
-  <!-- <button class="close" on:click={() => handleDelete(item.id)}>X</button> -->
-  <p class="text-display">
-    {@html replace_content(item.text)}
-  </p>
-
   
+  <p class="text-display">
+    {@html replaceContentToShowClickableLinks(item.text)}
+  </p>
+  
+  <p><br></p>
+  <button on:click={() => handleVoteRequest(item.id)}>Vote As Apprentice</button>
+
+  {#if mode === "apprentice"}
+    <!-- <form on:submit|preventDefault={handleSubmit}>
+      <div class="input-group">
+        <input
+          type="text"
+          on:input={handleInput}
+          bind:value={apprenticeKey}
+          placeholder="Please enter your Apprentice Key"
+        />
+      </div>
+
+      {#if apprenticeKey !== ''}
+      <RatingSelect on:rating-select={handleSelect} />
+      {/if}
+    </form> -->
+  {/if}
   <a href="https://cultmagazine.org" class="linkInText" style="display: none;">
     you might only understand this if you try to delete it :)
   </a>
 </Card>
 
 <style>
-
   .linkInText {
     color: blue;
   }
@@ -59,7 +117,33 @@
     font-size: 19px;
   }
 
+  /* .input-group {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+  }
+
+  input {
+    flex-grow: 2;
+    border: none;
+    font-size: 16px;
+  }
+
+  input:focus {
+    outline: none;
+  } */
   /* .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  } */
+  /* .vote {
     position: absolute;
     top: 10px;
     right: 20px;

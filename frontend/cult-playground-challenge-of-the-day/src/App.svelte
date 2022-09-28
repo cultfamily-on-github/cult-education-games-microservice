@@ -76,19 +76,22 @@
     {/if}
 
     <p><br /></p>
+    
+    
+    <button on:click={() => changeShowMasterMode()}> Show Master Mode </button>
+    {#if showMasterMode}
+    <MasterModeForm />
+    {/if}
+    
+    <p><br /></p>
 
     <button on:click={() => changeShowApprenticeMode()}>
-      Show Apprentice Mode
+      Show Challenge Proposals
     </button>
     {#if showApprenticeMode}
       <ApprenticeModeForm />
     {/if}
     <p><br /></p>
-
-    <button on:click={() => changeShowMasterMode()}> Show Master Mode </button>
-    {#if showMasterMode}
-      <MasterModeForm />
-    {/if}
   </div>
 </main>
 
