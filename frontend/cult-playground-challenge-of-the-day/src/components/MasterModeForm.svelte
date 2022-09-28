@@ -9,7 +9,7 @@
   let masterKey = ''
   let rating = 10
   let btnDisabled = true
-  let min = 10
+  let min = 20
   let message
 
   const handleSelect = e => rating = e.detail
@@ -25,9 +25,13 @@
 
   }
 
+  const handleMasterKeyInput = () => {
+    // maybe introduce validations here to reduce amount of fake requests
+  }
+
   const handleInput = () => {
     if(text.trim().length <= min) {
-      message = `Text must be at least ${min} characters`
+      message = `The Proposal Text must be at least ${min} characters`
       btnDisabled = true
     } else {
       message = null
@@ -60,7 +64,7 @@
 <form on:submit|preventDefault={handleSubmit}>
   <!-- <RatingSelect on:rating-select={handleSelect} /> -->
   <div class="input-group">
-    <input type="text" on:input={handleInput} bind:value = {masterKey} placeholder="Please enter your Masterkey">
+    <input type="text" on:input={handleMasterKeyInput} bind:value = {masterKey} placeholder="Please enter your Masterkey">
   </div>
   
   <div class="input-group">

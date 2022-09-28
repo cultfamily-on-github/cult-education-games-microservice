@@ -84,14 +84,7 @@
   const handleSelect = (e) => (rating = e.detail);
 
   const handleInput = () => {
-    alert("I'll handle the submit");
-    // if(text.trim().length <= min) {
-    //   message = `Text must be at least ${min} characters`
-    //   btnDisabled = true
-    // } else {
-    //   message = null
-    //   btnDisabled = false
-    // }
+    alert("nice try :) you can't be a master here yet because this playground is just getting started.");
   };
 </script>
 
