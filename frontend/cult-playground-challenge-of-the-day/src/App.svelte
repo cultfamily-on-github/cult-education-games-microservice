@@ -57,7 +57,7 @@
 </script>
 
 <Seo
-	title="Home"
+	title="CULT Challenge Today"
 	description="We are a network of cultdao.io fans promoting freedom, fairness, education and love."
 />
 

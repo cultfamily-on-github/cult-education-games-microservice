@@ -1,7 +1,7 @@
 <script type="ts">
 	// import { page } from '$app/stores';
 
-	const brand = 'CULT Magazine';
+	const brand = 'CULT Challenge';
 
 	export let title = brand;
 	export let description =
@@ -14,7 +14,8 @@
 </script>
 
 <svelte:head>
-	<title>{title} - {brand}</title>
+	<!-- <title>{title} - {brand}</title> -->
+	<title>{title}</title>
 	<meta name="description" content={description} />
 
 	<meta property="og:type" content="website" />

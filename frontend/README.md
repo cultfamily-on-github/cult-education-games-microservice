@@ -20,12 +20,30 @@ npm run dev
 ```
 
 ## Start Locally
-This frontend was generated via: 
-... under construction
 ```sh
-
+git clone https://github.com/cultfamily-on-github/cult-education-games-microservice.git  
+npm install  
+npm run dev  
 ```
 
+## Act of Revolt Proposal
+I submitted the creation of this [cultplayground.org](https://cultplayground.org) as an act of revolt.
+
+### Name
+I programmed https://cultplayground.org
+
+### Handle
+https://twitter.com/Peer2peerE
+
+### Description
+
+### Evidence Link
+https://github.com/cultfamily-on-github/cult-education-games-microservice/commits/main
+
+### Worth
+0.25 WETH
+### Wallet
+0x9E972a43B3B8D68cD70930697E16429E47E88151
 
 
 
