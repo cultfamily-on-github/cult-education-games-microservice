@@ -59,7 +59,7 @@
   <div class="text-center">
     <h2>CULT Game Of The Day</h2>
 
-    <GameProposalItem item={$CultGameOfTheDayStore} />
+    <GameProposalItem mode='cultGameOfTheDay' item={$CultGameOfTheDayStore} />
     <Levels />
 
     <button on:click={() => changeShowDetails()}> Show Details </button>

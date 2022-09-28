@@ -1,7 +1,7 @@
 <script>
   import { CultGameProposalStore } from "../stores";
   import Card from "./Card.svelte";
-  import RatingSelect from './RatingSelect.svelte'
+  import RatingSelect from "./RatingSelect.svelte";
   export let mode = "";
   export let item;
 
@@ -9,9 +9,39 @@
   let apprenticeKey = "";
   let rating = 10;
 
-  const handleVoteRequest = (itemId) => {
+  const handleLetsDoIt = (text) => {
+    const firstLinkInText = getFirstLinkInText(text);
+    if (text.indexOf("https://") === -1) {
+      alert(`ok. just do it.`);
+    } else {
+      window.open(firstLinkInText, "_blank");
+    }
+  };
 
-    alert(`nice try :) you can't be an apprentice yet, because this playground is just getting started.`)
+  const getFirstLinkInText = (text) => {
+    let link = "";
+    let indexOfFirstLinkStart = text.indexOf("https://");
+    if (indexOfFirstLinkStart === -1) {
+      // no link in text
+    } else {
+      let restText = text.substr(indexOfFirstLinkStart, text.length);
+      let indexOfFirstLinkEnd = restText.indexOf(" ") - 1;
+
+      if (indexOfFirstLinkEnd === -2) {
+        // if end of link equals end of text
+        link = restText;
+      } else {
+        link = restText.substr(0, indexOfFirstLinkEnd);
+      }
+    }
+
+    return link;
+  };
+
+  const handleVoteRequest = (itemId) => {
+    alert(
+      `nice try :) you can't be an apprentice yet, because this playground is just getting started.`
+    );
 
     // CultGameProposalStore.update((currentFeedback) => {
     //   return currentFeedback.filter((item) => item.id != itemId);
@@ -30,6 +60,7 @@
       new_exp_match,
       '$1<a class="linkInText" target="_blank" href="http://$2">$2</a>'
     );
+
     return new_content;
   };
 
@@ -69,13 +100,18 @@
     {item.rating}
   </div>
 
-  
   <p class="text-display">
     {@html replaceContentToShowClickableLinks(item.text)}
   </p>
-  
-  <p><br></p>
-  <button on:click={() => handleVoteRequest(item.id)}>Vote As Apprentice</button>
+
+  <p><br /></p>
+  {#if mode === "cultGameOfTheDay"}
+    <button on:click={() => handleLetsDoIt(item.text)}>Let's Do It</button>
+  {:else}
+    <button on:click={() => handleVoteRequest(item.id)}
+      >Vote As Apprentice</button
+    >
+  {/if}
 
   {#if mode === "apprentice"}
     <!-- <form on:submit|preventDefault={handleSubmit}>
