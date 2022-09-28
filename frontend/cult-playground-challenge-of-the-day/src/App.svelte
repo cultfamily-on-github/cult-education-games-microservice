@@ -6,6 +6,7 @@
   import ApprenticeModeForm from "./components/ApprenticeModeForm.svelte";
   import {CultGameOfTheDayStore} from './stores'
   import GameProposalItem from './components/GameProposalItem.svelte'
+    import Seo from "./Seo.svelte";
 
   // import ShowApprenticeModeButton from "./components/buttons/ShowApprenticeModeButton.svelte";
 
@@ -54,6 +55,11 @@
     }
   };
 </script>
+
+<Seo
+	title="Home"
+	description="We are a network of cultdao.io fans promoting freedom, fairness, education and love."
+/>
 
 <main class="container">
   <div class="text-center">

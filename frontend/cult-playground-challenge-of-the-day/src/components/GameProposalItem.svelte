@@ -84,7 +84,7 @@
   const handleSelect = (e) => (rating = e.detail);
 
   const handleInput = () => {
-    alert("nice try :) you can't be a master here yet because this playground is just getting started.");
+    // alert("nice try :) you can't be a master here yet because this playground is just getting started.");
   };
 </script>
 
