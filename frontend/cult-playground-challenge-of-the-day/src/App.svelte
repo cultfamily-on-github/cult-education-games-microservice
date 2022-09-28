@@ -59,8 +59,6 @@
   let utcToday = `${dt.getUTCFullYear()}-${dt.getUTCMonth()+1}-${dt.getUTCDate()}`
   let currentGameOfTheDay = $CultGameProposalStore.filter((e) => e.utcDate === utcToday)[0]
 
-  alert(utcToday)
-  alert(currentGameOfTheDay)
 </script>
 
 <Seo
