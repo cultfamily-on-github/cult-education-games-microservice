@@ -1,6 +1,7 @@
 <script>
   import { CultGameProposalStore } from "../stores";
   import Card from "./Card.svelte";
+  import Countdown from "./Countdown.svelte";
   import RatingSelect from "./RatingSelect.svelte";
   export let mode = "";
   export let item;
@@ -8,6 +9,11 @@
   let text = "";
   let apprenticeKey = "";
   let rating = 10;
+
+  let validOnUTCYear = item.utcDate.split("-")[0]
+  let validOnUTCMonth = item.utcDate.split("-")[1].split("-")[0]
+  let validOnUTCDayte = item.utcDate.substr(item.utcDate.length-2, 2)
+  let validOnUTCTime = new Date( Date.UTC(validOnUTCYear, validOnUTCDayte, validOnUTCMonth, 23, 59, 59) ).getTime()
 
   const handleLetsDoIt = (text) => {
     const firstLinkInText = getFirstLinkInText(text);
@@ -93,6 +99,10 @@
     {item.rating}
   </div>
 
+  <Countdown deadline={validOnUTCTime}></Countdown>
+
+  <p><br></p>
+  
   <p class="text-display">
     {@html replaceContentToShowClickableLinks(item.text)}
   </p>
@@ -122,6 +132,7 @@
       {/if}
     </form> -->
   {/if}
+
   <a href="https://cultmagazine.org" class="linkInText" style="display: none;">
     you might only understand this if you try to delete it :)
   </a>

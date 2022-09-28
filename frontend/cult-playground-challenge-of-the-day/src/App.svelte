@@ -4,7 +4,7 @@
   import Levels from "./components/texts/Levels.svelte";
   import MasterModeForm from "./components/MasterModeForm.svelte";
   import ApprenticeModeForm from "./components/ApprenticeModeForm.svelte";
-  import {CultGameOfTheDayStore} from './stores'
+  import {CultGameProposalStore} from './stores'
   import GameProposalItem from './components/GameProposalItem.svelte'
     import Seo from "./Seo.svelte";
 
@@ -54,6 +54,13 @@
       showApprenticeMode = false;
     }
   };
+
+  let dt = new Date()
+  let utcToday = `${dt.getUTCFullYear()}-${dt.getUTCMonth()+1}-${dt.getUTCDate()}`
+  let currentGameOfTheDay = $CultGameProposalStore.filter((e) => e.utcDate === utcToday)[0]
+
+  alert(utcToday)
+  alert(currentGameOfTheDay)
 </script>
 
 <Seo
@@ -65,7 +72,8 @@
   <div class="text-center">
     <h2>CULT Game Of The Day</h2>
 
-    <GameProposalItem mode='cultGameOfTheDay' item={$CultGameOfTheDayStore} />
+
+    <GameProposalItem mode='cultGameOfTheDay' item={currentGameOfTheDay} />
     <Levels />
 
     <button on:click={() => changeShowDetails()}> Show Details </button>
