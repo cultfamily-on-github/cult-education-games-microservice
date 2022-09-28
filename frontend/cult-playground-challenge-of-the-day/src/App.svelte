@@ -8,6 +8,9 @@
   import Levels from "./components/texts/Levels.svelte";
   import MasterModeForm from "./components/MasterModeForm.svelte";
   import ApprenticeModeForm from "./components/ApprenticeModeForm.svelte";
+  import {CultGameOfTheDayStore} from './stores'
+  import GameProposalItem from './components/GameProposalItem.svelte'
+
   // import ShowApprenticeModeButton from "./components/buttons/ShowApprenticeModeButton.svelte";
 
   // import FeedbackForm from "./components/feedbackComponents/FeedbackForm.svelte";
@@ -60,7 +63,7 @@
   <div class="text-center">
     <h2>CULT Game Of The Day</h2>
 
-    <GameOfTheDay />
+    <GameProposalItem item={$CultGameOfTheDayStore} />
     <Levels />
 
     <button on:click={() => changeShowDetails()}> Show Details </button>
