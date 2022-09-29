@@ -1,0 +1,22 @@
+POST {{baseUrl}}/data/quantitative-analytics/{{rdpVersion}}/financial-contracts HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+{
+  "fields": [ "InstrumentTag", "StartDate", "EndDate", "FxSpot",   "FxSwapsCcy1Ccy2", "FxOutrightCcy1Ccy2" ],
+  "outputs": [ "Data", "Headers" ],
+  "universe": [
+    {
+     "instrumentType": "FxCross",
+     "instrumentDefinition": {
+      "instrumentTag": "FX_deal_001",
+      "fxCrossType": "FxForward",
+      "fxCrossCode": "EURGBP",
+      "legs": [ { "tenor": "3M10D" } ]
+    },
+  "pricingParameters": {
+    "valuationDate": "2019-02-02T00:00:00Z",
+    "priceSide": "Mid"
+   }
+  }
+ ]
+}

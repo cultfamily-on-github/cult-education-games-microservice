@@ -1,4 +1,4 @@
-import { opine, serveStatic } from 'https://deno.land/x/opine@2.3.3/mod.ts';
+import { opine, serveStatic, json } from 'https://deno.land/x/opine@2.3.3/mod.ts';
 import { opineCors } from 'https://deno.land/x/cors/mod.ts';
 
 const pathToIndexHTML = `${Deno.cwd()}/docs`;
@@ -7,6 +7,7 @@ const pathToGameProposals = `${Deno.cwd()}/game-proposals.json`;
 const app = opine();
 
 app.use(opineCors());
+app.use(json());
 
 app.use(serveStatic(pathToIndexHTML));
 app.use(serveStatic(pathToAssets));
@@ -21,6 +22,19 @@ app.get('/getproposals', async function (req, res) {
 
 	const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
 	res.send(gameProposals);
+});
+app.post('/addvoteongameproposal', async function (req, res) {
+	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
+
+	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
+	// res.send(gameProposals);
+});
+
+app.post('/addgameproposal', async function (req, res) {
+	console.log(`received the following gameproposal ${JSON.stringify(req.body)}`);
+
+	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
+	// res.send(gameProposals);
 });
 
 if (Deno.args[0] === undefined) {
@@ -62,5 +76,5 @@ if (Deno.args[0] === undefined) {
 			console.log(`shit happened: ${error}`);
 		}
 	}
-	
+
 }
