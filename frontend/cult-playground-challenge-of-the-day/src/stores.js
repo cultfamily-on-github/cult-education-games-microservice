@@ -18,7 +18,7 @@ export const CultGameProposalStore = writable([
   {
     id: 3,
     rating: 9,
-    text: 'Follow 10 new good people today who might love the CULTDAO. Look for common interests and connect with them - to learn, to make friends and to enhance our networks.',
+    text: 'Comment the following video https://rumble.com/v1l86tz-the-great-mission-of-rumble.html with something like. "Thank you Chris. You have our full support https://cultmagazine.org".',
     utcDate: '2022-9-30',
   },
   {
@@ -30,7 +30,7 @@ export const CultGameProposalStore = writable([
   {
     id: 14,
     rating: 9,
-    text: 'Invite 5 new people (neighbors, friends, colleagues, ...) who might love the CULTDAO to https://discord.com/invite/wearecultdao to expand our network.',
+    text: 'Invite 5 new people (neighbors, friends, colleagues, family members, ...) who might love the CULTDAO to https://discord.com/invite/wearecultdao to expand our network.',
     utcDate: '2022-10-1',
   },
   {
@@ -42,7 +42,7 @@ export const CultGameProposalStore = writable([
   {
     id: 6,
     rating: 9,
-    text: 'Ensure #ElonMuskLovesCULT is trending on Twitter.',
+    text: 'Follow 10 new good people today who might love the CULTDAO. Look for common interests and connect with them - to learn, to make friends and to enhance our networks.',
     utcDate: '2022-10-3',
   },
   {

@@ -8,7 +8,7 @@ or via
 <a href="https://t.me/freedomplayer" target="_blank"> Telegram</a>.
 <p><br /></p>
 
-Depending on your track record of supporting the CULTDAO in constructive range
+Depending on your track record of supporting the CULTDAO in constructive, range
 increasing ways, the host of this playground decides if you are ready for the
 role as apprentice or even for the role as master.
 <p><br /></p>
