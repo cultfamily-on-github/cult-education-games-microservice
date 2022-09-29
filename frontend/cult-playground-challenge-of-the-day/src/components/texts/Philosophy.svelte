@@ -19,7 +19,14 @@ It seems fair to give all people the chance to come on board early. <br /><br />
 
 <!-- In evolution playing turned out to be the most successful way of learning. <br><br> -->
 
-Let us play, learn and earn together in playful creativity to free the world.
+Let us play, learn and earn together in playful creativity to free the world. You might want to visit 
+<a
+    href="https://cultmagazine.org"
+    target="_blank"
+>
+cultmagazine.org</a
+> and check the Play 2 Earn Menu.
+
 <br /><br />
 
 If you do not like playing such games, you might want to let us know what we can

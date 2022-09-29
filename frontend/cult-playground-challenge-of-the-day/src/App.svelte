@@ -6,6 +6,7 @@
   import ApprenticeModeForm from "./components/ApprenticeModeForm.svelte";
   import {CultGameProposalStore} from './stores'
   import GameProposalItem from './components/GameProposalItem.svelte'
+  import GameOfTheDayItem from './components/GameOfTheDayItem.svelte'
   import Seo from "./Seo.svelte";
 
   let showDetails = false;
@@ -65,7 +66,7 @@
     <h2>CULT Game Of The Day</h2>
 
 
-    <GameProposalItem mode='cultGameOfTheDay' item={currentGameOfTheDay} />
+    <GameOfTheDayItem mode='cultGameOfTheDay' item={currentGameOfTheDay} />
     <Levels />
 
     <button on:click={() => changeShowDetails()}> Show Details </button>
