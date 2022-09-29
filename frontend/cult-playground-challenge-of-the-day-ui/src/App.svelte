@@ -7,7 +7,18 @@
   import GameProposalItem from "./components/GameProposalItem.svelte";
   import Seo from "./Seo.svelte";
   import { fade, scale } from "svelte/transition";
-  import { CultGames } from "./stores";
+  import { onMount } from "svelte";
+
+  // import { CultGames } from "./stores";
+
+  let gameProposals = [];
+
+  onMount(async () => {
+    const response = await fetch(`http://localhost:8042/getgameproposals`);
+    gameProposals = await response.json();
+
+    alert(gameProposals);
+  });
 
   let showDetails = false;
   let showPhilosophy = false;
@@ -101,7 +112,9 @@
     dt.getUTCMonth() + 1
   }-${dt.getUTCDate()}`;
 
-  let currentGameOfTheDay = $CultGames.filter((e) => e.utcDate === utcToday)[0];
+  let currentGameOfTheDay = gameProposals.filter(
+    (e) => e.utcDate === utcToday
+  )[0];
 
   let magic = new Date();
   // alert(dt.getUTCFullYear())
@@ -111,7 +124,7 @@
 
   let utcLastSecondOfToday = new Date(Date.UTC(2022, 8, 29, 23, 59, 59));
   let utcEndOfToday = new Date(Date.UTC(2022, 8, 29, 0, 0, 0));
-  let date = new Date()
+  let date = new Date();
 </script>
 
 <Seo
@@ -127,8 +140,20 @@
     <a href="https://time.is/UTC" target="_blank" style="color: white;"> UTC</a>
     <p><br /></p>
 
-    <GameOfTheDayItem item={currentGameOfTheDay} />
+    {#if currentGameOfTheDay}
+      <GameOfTheDayItem item={currentGameOfTheDay} />
+    {:else}
+      An unexpected situation occurred. Please submit an issue
+      <a
+        href="https://github.com/cultfamily-on-github/cult-education-games-microservice/issues"
+        target="_blank"
+        style="color: white;"
+      >
+        here</a
+      >.
+    {/if}
 
+    
     <Levels />
 
     <button on:click={() => changeShowDetails()}> Show Details </button>
@@ -156,7 +181,7 @@
       Show Game Proposals
     </button>
     {#if showProposalsMode}
-      {#each $CultGames as fb (fb.id)}
+      {#each gameProposals as fb (fb.id)}
         <p><br /><br /><br /></p>
 
         utcEndOfToday: {utcEndOfToday} <br />

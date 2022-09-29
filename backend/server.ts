@@ -17,25 +17,25 @@ app.get('/', function (req, res) {
 	res.sendFile(`${pathToIndexHTML}/index.html`);
 });
 
-app.get('/getproposals', async function (req, res) {
+app.get('/api/v1/getgameproposals', async function (req, res) {
 	console.log(`delivering proposals from ${pathToGameProposals}`);
 
 	const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
 	res.send(gameProposals);
 });
-app.post('/addvoteongameproposal', async function (req, res) {
+app.post('/api/v1/addgameproposal', async function (req, res) {
+	console.log(`received the following gameproposal ${JSON.stringify(req.body)}`);
+
+	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
+	// res.send(gameProposals);
+});
+app.post('/api/v1/addvoteongameproposal', async function (req, res) {
 	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
 
 	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
 	// res.send(gameProposals);
 });
 
-app.post('/addgameproposal', async function (req, res) {
-	console.log(`received the following gameproposal ${JSON.stringify(req.body)}`);
-
-	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
-	// res.send(gameProposals);
-});
 
 if (Deno.args[0] === undefined) {
 	console.log("please specify a port by giving a parameter like 3000")

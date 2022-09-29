@@ -8,55 +8,42 @@
   let text = "";
   let masterKey = "";
   let rating = 10;
-  let btnDisabled = true;
   let min = 20;
   let message;
 
   const handleSelect = (e) => (rating = e.detail);
 
-  const handleMasterKey = () => {
-    if (text.trim().length <= 42) {
-      message = `Masterkey must be at least 42 characters`;
-      btnDisabled = true;
-    } else {
-      message = null;
-      btnDisabled = false;
-    }
-  };
-
   const handleMasterKeyInput = () => {
     // maybe introduce validations here to reduce amount of fake requests
   };
 
-  const handleInput = () => {
+  const handleSubmit = async () => {
+    // alert("nice try :) you can't be a master here yet because this playground is just getting started.");
 
-    if(text.trim().length <= min) {
-      message = `The Proposal Text must be at least ${min} characters`
-      btnDisabled = true
-    } else {
-      message = null
-      btnDisabled = false
+    try {
+      await fetch("http://localhost:8042/api/v1/addgameproposal", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          text,
+          fromMasterKey: masterKey
+        }),
+      });
+    } catch (error) {
+      alert("an error occurred. please contact michael.")
+
+      /* an example request body could look like: 
+      {
+          text: "Explain to your neighbor how to install metamask.io and how to buy 1000000 CULT on https://uniswap.org.",
+          fromMasterKey: "michaelsdemomasterkey"
+      }*/
+
     }
-  };
-
-  const handleSubmit = () => {
-
-  alert("nice try :) you can't be a master here yet because this playground is just getting started.");
-
-  //   if (text.trim().length > min) {
-  //     const newFeedback = {
-  //       id: uuidv4(),
-  //       text,
-  //       rating: +rating,
-  //     };
-
-  //     CultGames.update((currentFeedback) => {
-  //       return [newFeedback, ...currentFeedback];
-  //     });
-
-  //     text = "";
-  //   }
-  };
+  }
 </script>
 
 <Card>
@@ -68,7 +55,6 @@
     <div class="input-group">
       <input
         type="text"
-        on:input={handleMasterKeyInput}
         bind:value={masterKey}
         placeholder="Please enter your Masterkey"
       />
@@ -77,13 +63,12 @@
     <div class="input-group">
       <input
         type="text"
-        on:input={handleInput}
         bind:value={text}
         placeholder="Please enter your Challenge of the Day Proposal"
       />
     </div>
     <p><br /></p>
-    <Button disabled={btnDisabled} type="submit">Send</Button>
+    <Button type="submit">Send</Button>
     {#if message}
       <div class="message">
         {message}

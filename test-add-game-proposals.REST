@@ -1,14 +1,8 @@
-POST http://localhost:8042/addvoteongameproposal HTTP/1.1
+POST http://localhost:8042/api/v1/addvoteongameproposal HTTP/1.1
 content-type: application/json
 
 {
-    "id": 0,
-    "rating": 0,
-    "text": "Ensure the following hashtags are trending on Twitter today: #BanklessIsCULT #RumbleIsCULT #CULTDAO. You might want to do so by retweeting: https://twitter.com/Peer2peerE/status/1575232469774651392?s=20&t=29KAdI7wbOWaaw0XtLt6sw",
-    "dateOfExecutionUTC": "",
-    "dateOfProposalUTC": "",
-    "from": "will be filled by backend",
-    "fromWallet": "optional if proposer wants to be rewarded",
-    "key": "michaelsdemomasterkey"
+    "text": "Explain to your neighbor how to install metamask.io and how to buy 1000000 CULT on https://uniswap.org.",
+    "fromMasterKey": "michaelsdemomasterkey"
 }
 
