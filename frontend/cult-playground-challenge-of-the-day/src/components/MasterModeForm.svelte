@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuidv4 } from "uuid";
-  import { CultGameProposalStore } from "../stores";
+  import { CultGames } from "../stores";
   import Card from "./Card.svelte";
   import Button from "./buttons/SendButton.svelte";
   import RatingSelect from "./RatingSelect.svelte";
@@ -50,7 +50,7 @@
   //       rating: +rating,
   //     };
 
-  //     CultGameProposalStore.update((currentFeedback) => {
+  //     CultGames.update((currentFeedback) => {
   //       return [newFeedback, ...currentFeedback];
   //     });
 

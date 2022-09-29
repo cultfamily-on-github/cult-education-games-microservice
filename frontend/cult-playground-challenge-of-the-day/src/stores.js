@@ -2,7 +2,7 @@ import { writable } from 'svelte/store'
 
 // will be sorted by rating and stored on backend - longterm perhaps also on-chain 
 
-export const CultGameProposalStore = writable([
+export const CultGames = writable([
   {
     id: 1,
     rating: 10,

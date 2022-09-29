@@ -3,11 +3,9 @@
   import HowItWorks from "./components/texts/HowItWorks.svelte";
   import Levels from "./components/texts/Levels.svelte";
   import MasterModeForm from "./components/MasterModeForm.svelte";
-  import ApprenticeModeForm from "./components/ApprenticeModeForm.svelte";
-  import {CultGameProposalStore} from './stores'
+  import {CultGames} from './stores'
   import GameOfTheDayItem from './components/GameOfTheDayItem.svelte'
   import Seo from "./Seo.svelte";
-  import PastGames from "./components/PastGames.svelte";
   import { fade, scale } from 'svelte/transition'
   import GameProposalItem from './components/GameProposalItem.svelte'
 
@@ -69,7 +67,7 @@
 
   let dt = new Date()
   let utcToday = `${dt.getUTCFullYear()}-${dt.getUTCMonth()+1}-${dt.getUTCDate()}`
-  let currentGameOfTheDay = $CultGameProposalStore.filter((e) => e.utcDate === utcToday)[0]
+  let currentGameOfTheDay = $CultGames.filter((e) => e.utcDate === utcToday)[0]
 
 </script>
 
@@ -86,6 +84,7 @@
     <p><br></p>
 
     <GameOfTheDayItem item={currentGameOfTheDay} />
+
     <Levels />
 
     <button on:click={() => changeShowDetails()}> Show Details </button>
@@ -114,7 +113,7 @@
       Show Game Proposals
     </button>
     {#if showApprenticeMode}
-    {#each $CultGameProposalStore as fb (fb.id)}
+    {#each $CultGames as fb (fb.id)}
     <div in:scale out:fade="{{ duration: 500 }}">
       <GameProposalItem item={fb} />
     </div>
@@ -127,7 +126,7 @@
       Show Past Games
     </button>
     {#if showPastChallengesMode}
-      {#each $CultGameProposalStore as fb (fb.id)}
+      {#each $CultGames as fb (fb.id)}
       <div in:scale out:fade="{{ duration: 500 }}">
         <GameOfThePastItem item={fb} />
       </div>

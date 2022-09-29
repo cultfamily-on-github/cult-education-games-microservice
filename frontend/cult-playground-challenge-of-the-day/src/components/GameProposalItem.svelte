@@ -1,5 +1,5 @@
 <script>
-  import { CultGameProposalStore } from "../stores";
+  import { CultGames } from "../stores";
   import Card from "./Card.svelte";
   import Countdown from "./Countdown.svelte";
   import RatingSelect from "./RatingSelect.svelte";
@@ -48,7 +48,7 @@
       `nice try :) you can't be an apprentice yet, because this playground is just getting started.`
     );
 
-    // CultGameProposalStore.update((currentFeedback) => {
+    // CultGames.update((currentFeedback) => {
     //   return currentFeedback.filter((item) => item.id != itemId);
     // });
   };
@@ -78,7 +78,7 @@
     //     rating: +rating
     //   }
 
-    //   CultGameProposalStore.update((currentFeedback) => {
+    //   CultGames.update((currentFeedback) => {
     //     return [newFeedback, ...currentFeedback]
     //   })
 
