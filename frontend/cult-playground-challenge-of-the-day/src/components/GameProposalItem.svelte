@@ -3,17 +3,16 @@
   import Card from "./Card.svelte";
   import Countdown from "./Countdown.svelte";
   import RatingSelect from "./RatingSelect.svelte";
-  export let mode = "";
   export let item;
 
   let text = "";
   let apprenticeKey = "";
   let rating = 10;
 
-  let validOnUTCYear = item.utcDate.split("-")[0]
-  let validOnUTCMonth = item.utcDate.split("-")[1].split("-")[0]
-  let validOnUTCDayte = item.utcDate.substr(item.utcDate.length-2, 2)
-  let validOnUTCTime = new Date( Date.UTC(validOnUTCYear, validOnUTCDayte, validOnUTCMonth, 23, 59, 59) ).getTime()
+  // let validOnUTCYear = item.utcDate.split("-")[0]
+  // let validOnUTCMonth = item.utcDate.split("-")[1].split("-")[0]
+  // let validOnUTCDayte = item.utcDate.substr(item.utcDate.length-2, 2)
+  // let validOnUTCTime = new Date( Date.UTC(validOnUTCYear, validOnUTCDayte, validOnUTCMonth, 23, 59, 59) ).getTime()
 
   const handleLetsDoIt = (text) => {
     const firstLinkInText = getFirstLinkInText(text);
@@ -99,8 +98,6 @@
     {item.rating}
   </div>
 
-  <Countdown deadline={validOnUTCTime}></Countdown>
-
   <p><br></p>
   
   <p class="text-display">
@@ -108,15 +105,10 @@
   </p>
 
   <p><br /></p>
-  {#if mode === "cultGameOfTheDay"}
-    <button on:click={() => handleLetsDoIt(item.text)}>Let's Do It</button>
-  {:else}
     <button on:click={() => handleVoteRequest(item.id)}
       >Vote As Apprentice</button
     >
-  {/if}
 
-  {#if mode === "apprentice"}
     <!-- <form on:submit|preventDefault={handleSubmit}>
       <div class="input-group">
         <input
@@ -131,17 +123,11 @@
       <RatingSelect on:rating-select={handleSelect} />
       {/if}
     </form> -->
-  {/if}
 
-  <a href="https://cultmagazine.org" class="linkInText" style="display: none;">
-    you might only understand this if you try to delete it :)
-  </a>
+
 </Card>
 
 <style>
-  .linkInText {
-    color: blue;
-  }
   .num-display {
     position: absolute;
     top: -10px;
