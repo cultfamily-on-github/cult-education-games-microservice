@@ -32,6 +32,19 @@ When it comes to off-chain backends [Deno](https://deno.land) is the runtime env
 Deno can be perceived as the successor of NodeJS imo.  
 You might check the [Deno Main Repo](https://github.com/denoland/deno) and join the [Deno Community](https://discord.com/invite/deno).
 
+### Start Locally
+To start the backend server locally you might execute:  
+
+```sh
+deno run --allow-read --allow-net --allow-write --allow-env backend/server.ts 8042
+```
+
+### Start in Production
+```sh
+pm2 start backend/server.ts --interpreter="deno" --interpreter-args="run --allow-read --allow-env --allow-net" -- 443
+```
+
+
 ## Contribute
 Please contribute via pull request. 
 

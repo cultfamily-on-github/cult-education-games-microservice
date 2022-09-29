@@ -9,6 +9,7 @@ We consider the following two options when it comes to page provisioning - aka. 
 
 1. Utilize GitHub Pages
 2. Utilize a dedicated Web Server 
+3. deploy via ipfs and use ens.domains once this microservice is stable
 
 ## Web Harvesting CULT resources
 It seems that test frameworks like [codecept.io](https://codecept.io) also allow for simple Web Harvesting.   
