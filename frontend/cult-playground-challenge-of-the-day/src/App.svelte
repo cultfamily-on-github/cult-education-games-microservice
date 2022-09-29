@@ -8,6 +8,8 @@
   import GameOfTheDayItem from './components/GameOfTheDayItem.svelte'
   import Seo from "./Seo.svelte";
   import PastGames from "./components/PastGames.svelte";
+  import { fade, scale } from 'svelte/transition'
+  import GameProposalItem from './components/GameProposalItem.svelte'
 
   let showDetails = false;
   let showPhilosophy = false;
@@ -81,6 +83,8 @@
     <h2>CULT Game Of The Day</h2>
     <p><br></p>
     {utcToday} <a href="https://time.is/UTC" target="_blank" style="color: white;"> UTC</a>
+    <p><br></p>
+
     <GameOfTheDayItem item={currentGameOfTheDay} />
     <Levels />
 
@@ -110,7 +114,11 @@
       Show Game Proposals
     </button>
     {#if showApprenticeMode}
-      <ApprenticeModeForm />
+    {#each $CultGameProposalStore as fb (fb.id)}
+    <div in:scale out:fade="{{ duration: 500 }}">
+      <GameProposalItem item={fb} />
+    </div>
+    {/each}
     {/if}
 
     <p><br /></p>
@@ -119,7 +127,11 @@
       Show Past Games
     </button>
     {#if showPastChallengesMode}
-      <PastGames />
+      {#each $CultGameProposalStore as fb (fb.id)}
+      <div in:scale out:fade="{{ duration: 500 }}">
+        <GameOfThePastItem item={fb} />
+      </div>
+      {/each}
     {/if}
     <p><br /></p> -->
   </div>

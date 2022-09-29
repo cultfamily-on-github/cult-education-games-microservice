@@ -7,7 +7,7 @@
   let validOnUTCYear = item.utcDate.split("-")[0]
   let validOnUTCMonth = item.utcDate.split("-")[1].split("-")[0]
   let validOnUTCDayte = item.utcDate.substr(item.utcDate.length-2, 2)
-  let validOnUTCTime = new Date( Date.UTC(validOnUTCYear, validOnUTCDayte, validOnUTCMonth, 23, 59, 59) ).getTime()
+  let validOnUTCTime = new Date(Date.UTC(validOnUTCYear, validOnUTCDayte, validOnUTCMonth, 23, 59, 59)).getTime()
 
   const handleLetsDoIt = (text) => {
     const firstLinkInText = getFirstLinkInText(text);
