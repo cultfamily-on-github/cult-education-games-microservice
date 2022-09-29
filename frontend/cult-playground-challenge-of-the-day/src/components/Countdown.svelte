@@ -50,5 +50,4 @@
     });
 </script>
 
-UTC Date: {utcFullYear}-{month}-{utcDate} <br />
-Countdown: {hours}h {minutes}m {seconds}s
+Ends In: {hours}h {minutes}m {seconds}s

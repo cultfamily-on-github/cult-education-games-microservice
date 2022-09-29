@@ -79,8 +79,8 @@
 <main class="container">
   <div class="text-center">
     <h2>CULT Game Of The Day</h2>
-
-
+    <p><br></p>
+    {utcToday} <a href="https://time.is/UTC" target="_blank" style="color: white;"> UTC</a>
     <GameOfTheDayItem item={currentGameOfTheDay} />
     <Levels />
 
@@ -107,7 +107,7 @@
     <p><br /></p>
 
     <button on:click={() => changeShowApprenticeMode()}>
-      Show Challenge Proposals
+      Show Game Proposals
     </button>
     {#if showApprenticeMode}
       <ApprenticeModeForm />
@@ -115,13 +115,13 @@
 
     <p><br /></p>
 
-    <button on:click={() => changeShowPastChallenges()}>
-      Show Past Challenges
+    <!-- <button on:click={() => changeShowPastChallenges()}>
+      Show Past Games
     </button>
     {#if showPastChallengesMode}
       <PastGames />
     {/if}
-    <p><br /></p>
+    <p><br /></p> -->
   </div>
 </main>
 
