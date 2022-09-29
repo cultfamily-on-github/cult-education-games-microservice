@@ -7,11 +7,13 @@
   import {CultGameProposalStore} from './stores'
   import GameOfTheDayItem from './components/GameOfTheDayItem.svelte'
   import Seo from "./Seo.svelte";
+  import PastGames from "./components/PastGames.svelte";
 
   let showDetails = false;
   let showPhilosophy = false;
-  let showApprenticeMode = false;
   let showMasterMode = false;
+  let showApprenticeMode = false;
+  let showPastChallengesMode = false;
 
   const changeShowDetails = () => {
     showDetails = !showDetails;
@@ -19,6 +21,7 @@
       showPhilosophy = false;
       showApprenticeMode = false;
       showMasterMode = false;
+      showPastChallengesMode = false;
     }
   };
 
@@ -28,6 +31,7 @@
       showDetails = false;
       showApprenticeMode = false;
       showMasterMode = false;
+      showPastChallengesMode = false;
     }
   };
   
@@ -37,6 +41,17 @@
       showDetails = false;
       showPhilosophy = false;
       showMasterMode = false;
+      showPastChallengesMode = false;
+    }
+  };
+
+  const changeShowPastChallenges = () => {
+    showPastChallengesMode = !showPastChallengesMode;
+    if (showPastChallengesMode) {
+      showDetails = false;
+      showPhilosophy = false;
+      showMasterMode = false;
+      showApprenticeMode = false;
     }
   };
   
@@ -46,6 +61,7 @@
       showDetails = false;
       showPhilosophy = false;
       showApprenticeMode = false;
+      showPastChallengesMode = false;
     }
   };
 
@@ -95,6 +111,15 @@
     </button>
     {#if showApprenticeMode}
       <ApprenticeModeForm />
+    {/if}
+
+    <p><br /></p>
+
+    <button on:click={() => changeShowPastChallenges()}>
+      Show Past Challenges
+    </button>
+    {#if showPastChallengesMode}
+      <PastGames />
     {/if}
     <p><br /></p>
   </div>

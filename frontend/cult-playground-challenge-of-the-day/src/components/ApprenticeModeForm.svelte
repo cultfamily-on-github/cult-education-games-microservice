@@ -20,6 +20,6 @@
 
 {#each $CultGameProposalStore as fb (fb.id)}
 <div in:scale out:fade="{{ duration: 500 }}">
-  <GameProposalItem mode='apprentice' item={fb} />
+  <GameProposalItem item={fb} />
 </div>
 {/each}
