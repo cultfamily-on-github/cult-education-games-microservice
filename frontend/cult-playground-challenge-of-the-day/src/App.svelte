@@ -72,7 +72,7 @@
 </script>
 
 <Seo
-	title="CULT Challenge Today"
+	title="CULT Game Of The Day"
 	description="We are a network of cultdao.io fans promoting freedom, fairness, education and love."
 />
 

@@ -24,7 +24,7 @@ export const CultGames = writable([
   {
     id: 4,
     rating: 9,
-    text: 'Invite 5 new people (neighbors, friends, colleagues, ...) who might love the CULTDAO to https://discord.com/invite/wearecultdao to expand our network.',
+    text: 'Find 2 people (neighbors, friends, colleagues, family members, ...) who do not have metamask.io yet. Explain to them how important it is to educate themselves around self-hosted wallets. You migh use the info in the following tweet. Please also retweet.',
     utcDate: '2022-10-01',
   },
   {
@@ -50,5 +50,11 @@ export const CultGames = writable([
     rating: 8,
     text: 'Ensure #SaylorLovesCULT is trending on Twitter.',
     utcDate: '2022-10-4',
+  },
+  {
+    id: 8,
+    rating: 9,
+    text: 'Find 2 people who do not have CULT or RVLT yet. Explain to them how valuable decentralization is. Help them to buy CULT or RVLT. You migh use the info in the following tweet. Please also retweet.',
+    utcDate: '2022-10-01',
   },
 ])
