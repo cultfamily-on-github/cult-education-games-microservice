@@ -24,7 +24,7 @@ export const CultGames = writable([
   {
     id: 4,
     rating: 9,
-    text: 'Find 2 people (neighbors, friends, colleagues, family members, ...) who do not have metamask.io yet. Explain to them how important it is to educate themselves around self-hosted wallets. You migh use the info in the following tweet. Please also retweet.',
+    text: 'Find 2 people (neighbors, friends, colleagues, family members, ...) who do not have metamask.io yet. Explain to them how important it is to educate themselves around self-hosted wallets.',
     utcDate: '2022-10-01',
   },
   {

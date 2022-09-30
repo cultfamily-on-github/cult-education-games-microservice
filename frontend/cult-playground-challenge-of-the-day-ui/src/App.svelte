@@ -5,6 +5,7 @@
   import MasterModeForm from "./components/MasterModeForm.svelte";
   import GameOfTheDayItem from "./components/GameOfTheDayItem.svelte";
   import GameProposalItem from "./components/GameProposalItem.svelte";
+  import GameOfThePastItem from "./components/GameOfThePastItem.svelte";
   import Seo from "./Seo.svelte";
   import { fade, scale } from "svelte/transition";
   import { onMount } from "svelte";
@@ -25,7 +26,8 @@
 
   onMount(async () => {
     const response = await fetch(
-      `http://localhost:8042/api/v1/getgameproposals`
+      // `http://localhost:8042/api/v1/getgameproposals`
+      `https://cultplayground.org/api/v1/getgameproposals`
     );
 
     gameProposals = await response.json();
@@ -162,7 +164,7 @@
           {#if getDateFromString(fb.expiryDateUTC) < getDateFromString(lastMomentOfToday)}
             <p><br /><br /><br /></p>
             <div in:scale out:fade={{ duration: 500 }}>
-              <GameProposalItem item={fb} />
+              <GameOfThePastItem item={fb} />
             </div>
           {/if}
         {/each}

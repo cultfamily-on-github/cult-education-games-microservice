@@ -12,7 +12,8 @@
 
   const sendGameProposal = async () => {
     try {
-      await fetch("http://localhost:8042/api/v1/addgameproposal", {
+      // await fetch("http://localhost:8042/api/v1/addgameproposal", {
+      await fetch("http://cultplayground.org/api/v1/addgameproposal", {
         method: "post",
         headers: {
           Accept: "application/json",
