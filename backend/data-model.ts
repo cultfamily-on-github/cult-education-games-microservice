@@ -21,3 +21,16 @@ export interface IGameProposal {
     rating: number,
     proposedBy: string
 }
+
+export interface IVoteInbound {
+    id: number,
+    rating: number,
+    apprenticeKey: string
+}
+
+export interface IVote {
+    id: number,
+    votingDate: string,
+    rating: number,
+    voteBy: string
+}

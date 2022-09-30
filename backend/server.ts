@@ -1,6 +1,7 @@
 import { opine, serveStatic, json } from 'https://deno.land/x/opine@2.3.3/mod.ts';
 import { opineCors } from 'https://deno.land/x/cors/mod.ts';
 import { PersistenceService } from './persistence-service.ts';
+import { GameProposalOrganizer } from './game-proposal-organizer.ts';
 
 const pathToIndexHTML = `${Deno.cwd()}/docs`;
 const pathToAssets = `${pathToIndexHTML}/assets`;
@@ -22,15 +23,14 @@ app.get('/api/v1/getgameproposals', async function (req, res) {
 })
 
 app.post('/api/v1/addgameproposal', async function (req, res) {
-	await PersistenceService.addGameProposal(req.body)
+	await GameProposalOrganizer.addGameProposal(req.body)
 	res.status(200).send("thank you")
 })
 
 app.post('/api/v1/addvoteongameproposal', async function (req, res) {
 	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
 	
-	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
-	// res.send(gameProposals);
+	await GameProposalOrganizer.addVoteOnGameProposal(req.body)
 	res.status(200).send("thank you")
 })
 
