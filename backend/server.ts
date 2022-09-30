@@ -3,19 +3,18 @@ import { opineCors } from 'https://deno.land/x/cors/mod.ts';
 import { PersistenceService } from './persistence-service.ts';
 import { GameProposalOrganizer } from './game-proposal-organizer.ts';
 
-const pathToIndexHTML = `${Deno.cwd()}/docs`;
-const pathToAssets = `${pathToIndexHTML}/assets`;
+
 const app = opine();
 
 app.use(opineCors());
 app.use(json());
 
-app.use(serveStatic(pathToIndexHTML));
-app.use(serveStatic(pathToAssets));
+app.use(serveStatic(PersistenceService.pathToIndexHTML));
+app.use(serveStatic(PersistenceService.pathToAssets));
 
 app.get('/', function (req, res) {
-	console.log(`serving index html from ${pathToIndexHTML}`);
-	res.sendFile(`${pathToIndexHTML}/index.html`);
+	console.log(`serving index html from ${PersistenceService.pathToIndexHTML}`);
+	res.sendFile(`${PersistenceService.pathToIndexHTML}/index.html`);
 });
 
 app.get('/api/v1/getgameproposals', async function (req, res) {
@@ -48,9 +47,8 @@ if (Deno.args[0] === undefined) {
 
 	} else {
 
-		const pathToCertificates = '/etc/letsencrypt/live/cultplayground.org';
-		const pathToCertFile = `${pathToCertificates}/fullchain.pem`
-		const pathToKeyFile = `${pathToCertificates}/privkey.pem`
+		const pathToCertFile = `${PersistenceService.pathToCertificates}/fullchain.pem`
+		const pathToKeyFile = `${PersistenceService.pathToCertificates}/privkey.pem`
 
 		console.log(`reading cert file from ${pathToCertFile}`);
 		console.log(`reading key file from ${pathToKeyFile}`);

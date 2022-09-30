@@ -3,6 +3,10 @@ import { IGameProposal, IGameProposalInbound, IVote, IVoteInbound, IMasterkeyFil
 
 export class PersistenceService {
 
+    public static readonly pathToIndexHTML = `${Deno.cwd()}/docs`;
+    public static readonly pathToAssets = `${PersistenceService.pathToIndexHTML}/assets`;
+    public static readonly pathToCertificates = '/etc/letsencrypt/live/cultplayground.org';
+
     public static pathToGameProposals = `${Deno.cwd()}/operational-data/game-proposals.json`;
     public static pathToMasterKeys = `${Deno.cwd()}/operational-data/master-keys.json`;
     public static pathToApprenticeKeys = `${Deno.cwd()}/operational-data/apprentice-keys.json`;
@@ -29,5 +33,5 @@ export class PersistenceService {
     public static async writeVotes(votes: IVoteInbound[]): Promise<void> {
         await Deno.writeTextFile(PersistenceService.pathToVotes, JSON.stringify(votes))
     }
-    
+
 }
