@@ -38,6 +38,10 @@ export class DateDoctor {
 
   public static getNextFreeExpiryDate(gameProposals: IGameProposal[]): string {
 
+    if (gameProposals.length === 0) {
+      return DateDoctor.getLastMomentOfTodayFromDate(new Date())
+    }
+    
     const sortOptions: ISortOptions[] = [
       { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
     ]
