@@ -1,9 +1,9 @@
 import { opine, serveStatic, json } from 'https://deno.land/x/opine@2.3.3/mod.ts';
 import { opineCors } from 'https://deno.land/x/cors/mod.ts';
+import { PersistenceService } from './persistence-service.ts';
 
 const pathToIndexHTML = `${Deno.cwd()}/docs`;
 const pathToAssets = `${pathToIndexHTML}/assets`;
-const pathToGameProposals = `${Deno.cwd()}/game-proposals.json`;
 const app = opine();
 
 app.use(opineCors());
@@ -18,23 +18,19 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/v1/getgameproposals', async function (req, res) {
-	console.log(`delivering proposals from ${pathToGameProposals}`);
+	res.send(await PersistenceService.readGameProposals());
+})
 
-	const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
-	res.send(gameProposals);
-});
 app.post('/api/v1/addgameproposal', async function (req, res) {
-	console.log(`received the following gameproposal ${JSON.stringify(req.body)}`);
+	await PersistenceService.addGameProposal(req.body)
+})
 
-	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
-	// res.send(gameProposals);
-});
 app.post('/api/v1/addvoteongameproposal', async function (req, res) {
 	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
 
 	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
 	// res.send(gameProposals);
-});
+})
 
 
 if (Deno.args[0] === undefined) {

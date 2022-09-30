@@ -20,7 +20,13 @@ feel free to fork the
 >
     Code Repository</a
 >
-and host your own CULT Playground.
+and host your own CULT Playground. You might also consider to provide a
+<a
+    href="https://github.com/cultfamily-on-github/cult-education-games-microservice/issues/2"
+    target="_blank"
+>
+    decentralized backend</a
+>.
 
 <p><br /><br /></p>
 

@@ -34,7 +34,7 @@
         }),
       });
     } catch (error) {
-      alert("an error occurred. please contact michael.")
+      alert(`an error occurred. please contact michael. tell him: ${error.message}`)
 
       /* an example request body could look like: 
       {
@@ -47,16 +47,13 @@
 </script>
 
 <Card>
-  <header>
-    <h2>Master Mode</h2>
-  </header>
   <form on:submit|preventDefault={handleSubmit}>
     <!-- <RatingSelect on:rating-select={handleSelect} /> -->
     <div class="input-group">
       <input
         type="text"
         bind:value={masterKey}
-        placeholder="Please enter your Masterkey"
+        placeholder="Please enter your Masterkey."
       />
     </div>
 
@@ -64,7 +61,7 @@
       <input
         type="text"
         bind:value={text}
-        placeholder="Please enter your Challenge of the Day Proposal"
+        placeholder="Please enter your Gameproposal."
       />
     </div>
     <p><br /></p>
@@ -78,16 +75,6 @@
 </Card>
 
 <style>
-  header {
-    max-width: 400px;
-    margin: auto;
-  }
-
-  header h2 {
-    font-size: 22px;
-    font-weight: 600;
-    text-align: center;
-  }
 
   .input-group {
     display: flex;

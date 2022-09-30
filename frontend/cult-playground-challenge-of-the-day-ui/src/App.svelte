@@ -170,7 +170,7 @@
 
     <p><br /></p>
 
-    <button on:click={() => changeShowMasterMode()}> Show Master Mode </button>
+    <button on:click={() => changeShowMasterMode()}> Add Game Proposal </button>
     {#if showMasterMode}
       <MasterModeForm />
     {/if}
