@@ -6,11 +6,12 @@ import { GameProposalOrganizer } from './game-proposal-organizer.ts';
 
 const app = opine();
 
-app.use(opineCors());
 app.use(json());
 
 app.use(serveStatic(PersistenceService.pathToIndexHTML));
 app.use(serveStatic(PersistenceService.pathToAssets));
+
+app.use(opineCors());
 
 app.get('/', function (req, res) {
 	console.log(`serving index html from ${PersistenceService.pathToIndexHTML}`);

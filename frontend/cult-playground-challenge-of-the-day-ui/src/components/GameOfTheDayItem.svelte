@@ -1,13 +1,13 @@
 <script>
-  
   import Card from "./Card.svelte";
   import Countdown from "./Countdown.svelte";
   export let item;
 
-  let validOnUTCYear = item.utcDate.split("-")[0]
-  let validOnUTCMonth = item.utcDate.split("-")[1].split("-")[0]
-  let validOnUTCDayte = item.utcDate.substr(item.utcDate.length-2, 2)
-  let validOnUTCTime = new Date(Date.UTC(validOnUTCYear, validOnUTCDayte, validOnUTCMonth, 23, 59, 59)).getTime()
+  const year = item.expiryDateUTC.substr(0, 4)
+  const month = item.expiryDateUTC.substr(5, 2) - 1
+  const dayte = item.expiryDateUTC.substr(8, 2)
+
+  let validOnUTCTime = new Date( Date.UTC(year, dayte, month, 23, 59, 59, 999) ).getTime()
 
   const handleLetsDoIt = (text) => {
     const firstLinkInText = getFirstLinkInText(text);
@@ -57,22 +57,24 @@
 </script>
 
 <Card>
+
   <div class="num-display">
     {item.rating}
   </div>
-
+  
   <Countdown deadline={validOnUTCTime}></Countdown>
-
+  
   <p><br></p>
   
   <p class="text-display">
     {@html replaceContentToShowClickableLinks(item.text)}
   </p>
-
+  
   <p><br /></p>
-
-    <button on:click={() => handleLetsDoIt(item.text)}>Let's Do It</button>
-
+  
+  <button on:click={() => handleLetsDoIt(item.text)}>Let's Do It</button>
+  
+  
   <a href="https://cultmagazine.org" class="linkInText" style="display: none;">
     you might only understand this if you try to delete it :)
   </a>

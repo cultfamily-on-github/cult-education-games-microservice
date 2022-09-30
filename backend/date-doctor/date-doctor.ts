@@ -49,4 +49,18 @@ export class DateDoctor {
     return result
   }
 
+  public static isBefore(input1: string, input2: string) {
+    const date1 = DateDoctor.getDateFromString(input1)
+    const date2 = DateDoctor.getDateFromString(input2)
+
+    return date1 < date2
+  }
+
+  public static getDateFromString(input: string) {
+    const year = Number(input.substr(0, 4))
+    const month = Number(input.substr(5, 2)) - 1
+    const dayte = Number(input.substr(8, 2))
+
+    return new Date(Date.UTC(year, month, dayte))
+  }
 }
