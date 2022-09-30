@@ -83,3 +83,10 @@ input:focus {
   text-align: center;
   color: rebeccapurple;
 }
+
+
+.button-colors-on-Card {
+  background-color: #202142;
+  color: white;
+  font-size: larger;
+}

@@ -72,7 +72,7 @@
   
   <p><br /></p>
   
-  <button on:click={() => handleLetsDoIt(item.text)}>Let's Do It</button>
+  <button class="button-colors-on-Card" on:click={() => handleLetsDoIt(item.text)}>Let's Do It</button>
   
   
   <a href="https://cultmagazine.org" class="linkInText" style="display: none;">

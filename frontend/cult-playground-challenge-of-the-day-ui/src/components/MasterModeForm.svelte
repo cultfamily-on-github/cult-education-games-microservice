@@ -60,14 +60,11 @@
   <p><br /></p>
   {#if text !== "" && masterKey !== ""}
     <div class="color-of-body">
-      <button class="local-button-colors" on:click={() => sendGameProposal()}>Send</button>
+      <button class="button-colors-on-Card" on:click={() => sendGameProposal()}>Send</button>
     </div>
   {/if}
 </Card>
 
 <style>
-  .local-button-colors {
-    background-color: #202142;
-    color: white;
-  }
+
 </style>

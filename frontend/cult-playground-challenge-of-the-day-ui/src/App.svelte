@@ -8,7 +8,7 @@
   import Seo from "./Seo.svelte";
   import { fade, scale } from "svelte/transition";
   import { onMount } from "svelte";
-  import { getLastMomentOfTodayFromDate } from "./helpers";
+  import { getLastMomentOfTodayFromDate, getDateFromString } from "./helpers";
 
   // import { CultGames } from "./stores";
 
@@ -19,7 +19,7 @@
   let showPhilosophy = false;
   let showMasterMode = false;
   let showProposalsMode = false;
-  let showPastChallengesMode = false;
+  let showPastGamesMode = false;
   let underConstructionMode = true;
   let visitorAlreadyProvedFancy = false;
 
@@ -45,7 +45,7 @@
       showPhilosophy = false;
       showProposalsMode = false;
       showMasterMode = false;
-      showPastChallengesMode = false;
+      showPastGamesMode = false;
     }
   };
 
@@ -55,7 +55,7 @@
       showDetails = false;
       showProposalsMode = false;
       showMasterMode = false;
-      showPastChallengesMode = false;
+      showPastGamesMode = false;
     }
   };
 
@@ -65,13 +65,13 @@
       showDetails = false;
       showPhilosophy = false;
       showMasterMode = false;
-      showPastChallengesMode = false;
+      showPastGamesMode = false;
     }
   };
 
-  const changeShowPastChallenges = () => {
-    showPastChallengesMode = !showPastChallengesMode;
-    if (showPastChallengesMode) {
+  const changeShowPastGamesMode = () => {
+    showPastGamesMode = !showPastGamesMode;
+    if (showPastGamesMode) {
       showDetails = false;
       showPhilosophy = false;
       showMasterMode = false;
@@ -85,13 +85,13 @@
       showDetails = false;
       showPhilosophy = false;
       showProposalsMode = false;
-      showPastChallengesMode = false;
+      showPastGamesMode = false;
     }
   };
 
   const proveVisitorIsFancy = () => {
-    visitorAlreadyProvedFancy = true
-  }
+    visitorAlreadyProvedFancy = true;
+  };
 </script>
 
 <Seo
@@ -143,35 +143,39 @@
       </button>
       {#if showProposalsMode}
         {#each gameProposals as fb (fb.id)}
-          <p><br /><br /><br /></p>
-
-          <!-- {#if new Date(getYearFromString(fb.utcDate), getMonthFromString(fb.utcDate) - 1, getDayteFromString(fb.utcDate)) < utcLastSecondOfToday}
-          This proposal belongs to the past
-        {:else} -->
-          <div in:scale out:fade={{ duration: 500 }}>
-            <GameProposalItem item={fb} />
-          </div>
-          <!-- {/if} -->
+          {#if getDateFromString(fb.expiryDateUTC) >= getDateFromString(lastMomentOfToday) && fb.id !== currentGameOfTheDay.id}
+            <p><br /><br /><br /></p>
+            <div in:scale out:fade={{ duration: 500 }}>
+              <GameProposalItem item={fb} />
+            </div>
+          {/if}
         {/each}
-
-        <p><br /></p>
-
-        <!-- <button on:click={() => changeShowPastChallenges()}>
-      Show Past Games
-    </button>
-    {#if showPastChallengesMode}
-      {#each $CultGames as fb (fb.id)}
-      <div in:scale out:fade="{{ duration: 500 }}">
-        <GameOfThePastItem item={fb} />
-      </div>
-      {/each}
-    {/if}
-    <p><br /></p> -->
       {/if}
+
+      <p><br /></p>
+      <button on:click={() => changeShowPastGamesMode()}>
+        Show Past Games
+      </button>
+
+      {#if showPastGamesMode}
+        {#each gameProposals as fb (fb.id)}
+          {#if getDateFromString(fb.expiryDateUTC) < getDateFromString(lastMomentOfToday)}
+            <p><br /><br /><br /></p>
+            <div in:scale out:fade={{ duration: 500 }}>
+              <GameProposalItem item={fb} />
+            </div>
+          {/if}
+        {/each}
+        <p><br /></p>
+      {/if}
+
+
     {:else}
       <button on:click={() => proveVisitorIsFancy()}> This is Fancy </button>
     {/if}
+
   </div>
+
 </main>
 
 <style>
