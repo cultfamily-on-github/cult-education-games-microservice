@@ -1,4 +1,5 @@
-import { IGameProposal } from "./data-model.ts";
+import { IGameProposal, IMasterkeyFileEntry } from "./data-model.ts";
+// import { SortService, Direction } from "https://deno.land/x/sort@v1.1.1/mod.ts"
 
 export class PersistenceService {
 
@@ -23,15 +24,32 @@ export class PersistenceService {
 
         const masterKeys = JSON.parse(await Deno.readTextFile(PersistenceService.pathToMasterKeys))
 
-        const entry = masterKeys.filter((m: IGameProposal) => m.masterKey === gameProposal.masterKey)[0]
-        if (entry === undefined) {
-            throw new Error(`the masterkey which you have provided might be wrong.`)
+        const masterKeyFileEntry: IMasterkeyFileEntry = masterKeys.filter((m: IGameProposal) => m.masterKey === gameProposal.fromMasterKey)[0]
+
+        console.log("a")
+        if (masterKeyFileEntry === undefined) {
+            const errorMessage = `the masterkey ${gameProposal.fromMasterKey} might be wrong.`
+            console.log(errorMessage)
+            throw new Error(errorMessage)
         }
-
+        console.log("b")
         const gameProposals = JSON.parse(await Deno.readTextFile(PersistenceService.pathToGameProposals))
-        gameProposals.push(gameProposal)
-        await Deno.writeTextFile(JSON.stringify(gameProposals))
+        console.log("c")
 
+        const newEntryInGameProposals: IGameProposal = {
+            id: (gameProposals[0] === undefined) ? 1 : gameProposals[0].id + 1, // we sort or use unshift accordingly before saving
+            text: gameProposal.text,
+            proposalDateUTC: "",
+            executionDateUTC: "",
+            rating: 0,
+            proposedBy: masterKeyFileEntry.socialMediaLink
+        }
+        console.log("f")
+        gameProposals.unshift(newEntryInGameProposals)
+        console.log("g")
+        await Deno.writeTextFile(PersistenceService.pathToGameProposals, JSON.stringify(gameProposals))
+
+        console.log(`successfully added game proposal to ${PersistenceService.pathToGameProposals}`)
     }
 
     public static async addVoteOnGameProposals(gameProposalID: number, vote: number): Promise<void> {

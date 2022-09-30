@@ -1,9 +1,9 @@
-export interface IMasterkeys {
+export interface IMasterkeyFileEntry {
     socialMediaLink: string
     masterKey: string
 }
 
-export interface IApprenticeKeys {
+export interface IApprenticeKeyFileEntry {
     socialMediaLink: string
     apprenticeKey: string
 }
@@ -19,5 +19,5 @@ export interface IGameProposal {
     proposalDateUTC: string,
     executionDateUTC: string,
     rating: 10,
-    masterKey: string
+    proposedBy: string
 }

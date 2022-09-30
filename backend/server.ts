@@ -23,13 +23,15 @@ app.get('/api/v1/getgameproposals', async function (req, res) {
 
 app.post('/api/v1/addgameproposal', async function (req, res) {
 	await PersistenceService.addGameProposal(req.body)
+	res.status(200).send("thank you")
 })
 
 app.post('/api/v1/addvoteongameproposal', async function (req, res) {
 	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
-
+	
 	// const gameProposals = JSON.parse(await Deno.readTextFile(pathToGameProposals));
 	// res.send(gameProposals);
+	res.status(200).send("thank you")
 })
 
 
