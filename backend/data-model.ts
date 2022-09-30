@@ -10,7 +10,7 @@ export interface IApprenticeKeyFileEntry {
 
 export interface IGameProposalInbound {
     text: string
-    masterKey: string
+    fromMasterKey: string
 }
 
 export interface IGameProposal {
@@ -25,7 +25,7 @@ export interface IGameProposal {
 export interface IVoteInbound {
     id: number,
     rating: number,
-    apprenticeKey: string
+    fromApprenticeKey: string
 }
 
 export interface IVote {

@@ -16,4 +16,15 @@ It seems that test frameworks like [codecept.io](https://codecept.io) also allow
 The harvest can be transferred to [this repository](https://github.com/cultfamily-on-github/cult-artefacts-collection) from which the frontend can fetch the info and display it for the visitor. 
 
 
+## Unit Tests
+You can test the Game Proposal Organizer via:  
 
+```sh
+deno test --allow-read backend/game-proposal-organizer.spec.ts
+```
+
+You can test the Date Doctor via:  
+
+```sh
+deno test --allow-read backend/date-doctor/date-doctor.spec.ts
+```
