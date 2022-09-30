@@ -16,3 +16,30 @@ Deno.test("get end of a specific utc today", async () => {
     assertEquals(actualOutput, expectedOutput)
 
 })
+
+Deno.test("get next free expiry date", async () => {
+
+    const testInput = [
+        {
+            "id": 1,
+            "text": "a",
+            "proposalDateUTC": "2022-09-30 10:46:14",
+            "expiryDateUTC": "2022-09-30 00:00:00",
+            "rating": 0,
+            "proposedBy": "https://twitter.com/Peer2PeerE"
+        },
+        {
+            "id": 1,
+            "text": "a",
+            "proposalDateUTC": "2022-09-30 10:46:14",
+            "expiryDateUTC": "2022-10-01 00:00:00",
+            "rating": 0,
+            "proposedBy": "https://twitter.com/Peer2PeerE"
+        }
+    ]    
+
+    const actualOutput = DateDoctor.getNextFreeExpiryDate(testInput) // SUT
+    const expectedOutput = "2022-10-02 00:00:00"
+    assertEquals(actualOutput, expectedOutput)
+
+})

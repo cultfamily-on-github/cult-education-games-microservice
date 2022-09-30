@@ -17,7 +17,7 @@ export interface IGameProposal {
     id: number,
     text: string,
     proposalDateUTC: string,
-    executionDateUTC: string,
-    rating: 10,
+    expiryDateUTC: string,
+    rating: number,
     proposedBy: string
 }

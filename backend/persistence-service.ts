@@ -1,6 +1,6 @@
 import { IGameProposal, IMasterkeyFileEntry } from "./data-model.ts";
 // import { SortService, Direction } from "https://deno.land/x/sort@v1.1.1/mod.ts"
-import { DateDoctor } from "./date-doctor.ts"
+import { DateDoctor } from "./date-doctor/date-doctor.ts"
 
 export class PersistenceService {
 
@@ -27,27 +27,24 @@ export class PersistenceService {
 
         const masterKeyFileEntry: IMasterkeyFileEntry = masterKeys.filter((m: IGameProposal) => m.masterKey === gameProposal.fromMasterKey)[0]
 
-        console.log("a")
         if (masterKeyFileEntry === undefined) {
             const errorMessage = `the masterkey ${gameProposal.fromMasterKey} might be wrong.`
             console.log(errorMessage)
             throw new Error(errorMessage)
         }
-        console.log("b")
         const gameProposals = JSON.parse(await Deno.readTextFile(PersistenceService.pathToGameProposals))
-        console.log("c")
 
         const newEntryInGameProposals: IGameProposal = {
             id: (gameProposals[0] === undefined) ? 1 : gameProposals[0].id + 1, // we sort or use unshift accordingly before saving
             text: gameProposal.text,
-            proposalDateUTC: "",
-            executionDateUTC: "",
+            proposalDateUTC: DateDoctor.getFormattedUTCDateFromDate(new Date()),
+            expiryDateUTC: DateDoctor.getNextFreeExpiryDate(gameProposals),
             rating: 0,
             proposedBy: masterKeyFileEntry.socialMediaLink
         }
-        console.log("f")
+
         gameProposals.unshift(newEntryInGameProposals)
-        console.log("g")
+
         await Deno.writeTextFile(PersistenceService.pathToGameProposals, JSON.stringify(gameProposals))
 
         console.log(`successfully added game proposal to ${PersistenceService.pathToGameProposals}`)

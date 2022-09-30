@@ -1,3 +1,6 @@
+import { IGameProposal } from "../data-model.ts"
+import { SortService, Direction, ISortOptions } from "https://deno.land/x/sort@v1.1.1/mod.ts"
+
 export class DateDoctor {
 
   public static padTo2Digits(num: number) {
@@ -32,4 +35,34 @@ export class DateDoctor {
     const formattedUTCDateFromDate = DateDoctor.getFormattedUTCDateFromDate(date)
     return DateDoctor.getLastMomentOfTodayFromString(formattedUTCDateFromDate)
   }
+
+  public static getNextFreeExpiryDate(gameProposals: IGameProposal[]): string {
+
+    const sortOptions: ISortOptions[] = [
+      { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
+    ]
+
+    const sortedArray = SortService.sort(gameProposals, sortOptions)
+
+    const latestExpiryDateInList = sortedArray[0].expiryDateUTC
+
+    return DateDoctor.addOneDay(latestExpiryDateInList)
+
+  }
+
+  public static addOneDay(input: string): string {
+
+    const year = Number(input.substr(0, 4))
+    const month = Number(input.substr(5, 2)) - 1
+    const dayte = Number(input.substr(8, 2))
+
+    const currentDate = new Date(Date.UTC(year, month, dayte))
+
+    const oneDayLaterTimestamp = currentDate.setDate(currentDate.getDate() + 1)
+
+    const result = DateDoctor.getFormattedUTCDateFromDate(new Date(oneDayLaterTimestamp))
+
+    return result
+  }
+
 }
