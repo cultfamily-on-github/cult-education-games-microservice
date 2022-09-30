@@ -13,7 +13,6 @@
   // import { CultGames } from "./stores";
 
   let gameProposals = [];
-
   let currentGameOfTheDay;
   let lastMomentOfToday;
   let showDetails = false;
@@ -21,6 +20,8 @@
   let showMasterMode = false;
   let showProposalsMode = false;
   let showPastChallengesMode = false;
+  let underConstructionMode = true;
+  let visitorAlreadyProvedFancy = false;
 
   onMount(async () => {
     const response = await fetch(
@@ -87,6 +88,10 @@
       showPastChallengesMode = false;
     }
   };
+
+  const proveVisitorIsFancy = () => {
+    visitorAlreadyProvedFancy = true
+  }
 </script>
 
 <Seo
@@ -107,49 +112,51 @@
       <GameOfTheDayItem item={currentGameOfTheDay} />
     {/if}
 
-    <Levels />
+    {#if underConstructionMode || visitorAlreadyProvedFancy}
+      <Levels />
 
-    <button on:click={() => changeShowDetails()}> Show Details </button>
-    {#if showDetails}
-      <HowItWorks />
-    {/if}
+      <button on:click={() => changeShowDetails()}> Show Details </button>
+      {#if showDetails}
+        <HowItWorks />
+      {/if}
 
-    <p><br /></p>
+      <p><br /></p>
 
-    <button on:click={() => changeShowPhilosophy()}> Show Philosophy </button>
-    {#if showPhilosophy}
-      <Philosophy />
-    {/if}
+      <button on:click={() => changeShowPhilosophy()}> Show Philosophy </button>
+      {#if showPhilosophy}
+        <Philosophy />
+      {/if}
 
-    <p><br /></p>
+      <p><br /></p>
 
-    <button on:click={() => changeShowMasterMode()}> Add Game Proposal </button>
-    {#if showMasterMode}
-      <MasterModeForm />
-    {/if}
+      <button on:click={() => changeShowMasterMode()}>
+        Add Game Proposal
+      </button>
+      {#if showMasterMode}
+        <MasterModeForm />
+      {/if}
 
-    <p><br /></p>
+      <p><br /></p>
 
-    <button on:click={() => changeShowProposalsMode()}>
-      Show Game Proposals
-    </button>
-    {#if showProposalsMode}
-      {#each gameProposals as fb (fb.id)}
-        <p><br /><br /><br /></p>
+      <button on:click={() => changeShowProposalsMode()}>
+        Show Game Proposals
+      </button>
+      {#if showProposalsMode}
+        {#each gameProposals as fb (fb.id)}
+          <p><br /><br /><br /></p>
 
-        <!-- {#if new Date(getYearFromString(fb.utcDate), getMonthFromString(fb.utcDate) - 1, getDayteFromString(fb.utcDate)) < utcLastSecondOfToday}
+          <!-- {#if new Date(getYearFromString(fb.utcDate), getMonthFromString(fb.utcDate) - 1, getDayteFromString(fb.utcDate)) < utcLastSecondOfToday}
           This proposal belongs to the past
         {:else} -->
-        <div in:scale out:fade={{ duration: 500 }}>
-          <GameProposalItem item={fb} />
-        </div>
-        <!-- {/if} -->
-      {/each}
-    {/if}
+          <div in:scale out:fade={{ duration: 500 }}>
+            <GameProposalItem item={fb} />
+          </div>
+          <!-- {/if} -->
+        {/each}
 
-    <p><br /></p>
+        <p><br /></p>
 
-    <!-- <button on:click={() => changeShowPastChallenges()}>
+        <!-- <button on:click={() => changeShowPastChallenges()}>
       Show Past Games
     </button>
     {#if showPastChallengesMode}
@@ -160,6 +167,10 @@
       {/each}
     {/if}
     <p><br /></p> -->
+      {/if}
+    {:else}
+      <button on:click={() => proveVisitorIsFancy()}> This is Fancy </button>
+    {/if}
   </div>
 </main>
 
