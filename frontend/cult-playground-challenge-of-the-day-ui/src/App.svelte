@@ -35,9 +35,6 @@
 
     lastMomentOfToday = getLastMomentOfTodayFromDate(new Date());
 
-    alert(lastMomentOfToday);
-    const todayIsTheDate = lastMomentOfToday.split(" ")[0];
-
     currentGameOfTheDay = gameProposals.filter(
       (e) => e.expiryDateUTC === lastMomentOfToday
     )[0];
