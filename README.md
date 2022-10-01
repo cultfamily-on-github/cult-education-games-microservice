@@ -41,7 +41,7 @@ deno run --allow-read --allow-net --allow-write --allow-env backend/server.ts 80
 
 ### Start in Production
 ```sh
-pm2 start backend/server.ts --interpreter="deno" --interpreter-args="run --allow-read --allow-env --allow-net" -- 443
+pm2 start backend/server.ts --interpreter="deno" --interpreter-args="run --allow-read --allow-write --allow-env --allow-net" -- 443
 ```
 
 

@@ -11,8 +11,11 @@ export class GameProposalOrganizer {
 
         const masterKeys = await PersistenceService.readMasterKeysFile()
 
+        console.log("temp debug 1")
         const masterKeyFileEntry: IMasterkeyFileEntry 
-            = masterKeys.filter((m: IMasterkeyFileEntry) => m.masterKey === gameProposalInbound.fromMasterKey)[0]
+        = masterKeys.filter((m: IMasterkeyFileEntry) => m.masterKey === gameProposalInbound.fromMasterKey)[0]
+        
+        console.log("temp debug 2")
 
         if (masterKeyFileEntry === undefined) {
             const errorMessage = `the masterkey ${gameProposalInbound.fromMasterKey} might be wrong.`
@@ -21,7 +24,7 @@ export class GameProposalOrganizer {
         }
 
         const gameProposals = await PersistenceService.readGameProposals()
-
+        console.log("temp debug a")
         const gameProposal: IGameProposal = {
             id: (gameProposals[0] === undefined) ? 1 : gameProposals[0].id + 1, // we sort or use unshift accordingly before saving
             text: gameProposalInbound.text,
@@ -30,9 +33,11 @@ export class GameProposalOrganizer {
             rating: 0,
             proposedBy: masterKeyFileEntry.socialMediaLink
         }
-
+        
+        console.log("temp debug b")
         gameProposals.unshift(gameProposal)
-
+        
+        console.log("temp debug c")
         await PersistenceService.writeGameProposals(gameProposals)
 
         console.log(`successfully added game proposal to ${PersistenceService.pathToGameProposals}`)

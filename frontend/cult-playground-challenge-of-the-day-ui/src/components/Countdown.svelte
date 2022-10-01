@@ -17,7 +17,10 @@
     let countDownString = "";
 
     const updateCountdown = () => {
-        const now = new Date().getTime();
+        const hd = new Date();
+        // const dt = new Date(Date.UTC(hd.getFullYear(), hd.getMonth(), hd.getDate(), hd.getHours(), hd.getMinutes(), hd.getSeconds()));
+
+        const now = hd.getTime();
 
         const distance = deadline - now;
 
@@ -28,10 +31,9 @@
         );
         minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
     };
     onMount(async () => {
-        updateCountdown()
+        updateCountdown();
         setInterval(function () {
             updateCountdown();
         }, 1000);
@@ -42,7 +44,7 @@
 <div class="countdown">
     <h4>
         You have {hours}h {minutes}m {seconds}s to complete this game.
-    </h4> 
+    </h4>
 </div>
 
 <style>

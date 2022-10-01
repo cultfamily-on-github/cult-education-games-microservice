@@ -8,14 +8,13 @@
   const month = item.expiryDateUTC.substr(5, 2) - 1
   const dayte = item.expiryDateUTC.substr(8, 2)
 
-  // alert(month)
-  let validOnUTCTimeDate = new Date(
-    Date.UTC(year, month, dayte, 0, 0, 0, 0)
-  )
+  let expiryDateUTC = new Date(year, month, dayte, 23, 59, 59, 999)
 
-  // alert(validOnUTCTimeDate)
+  const timeZoneOffsetInMinutes = expiryDateUTC.getTimezoneOffset()
+  
+  expiryDateUTC.setMinutes(expiryDateUTC.getMinutes() - timeZoneOffsetInMinutes)
 
-  let validOnUTCTime = validOnUTCTimeDate.getTime()
+  let validOnUTCTime = expiryDateUTC.getTime()
 
   const handleLetsDoIt = (text) => {
     const firstLinkInText = getFirstLinkInText(text)
