@@ -10,7 +10,7 @@
   import { fade, scale } from "svelte/transition";
   import { onMount } from "svelte";
   import { getLastMomentOfTodayFromDate, getDateFromString } from "./helpers";
-    import { backendBaseURL } from "./stores";
+  import { backendBaseURL } from "./stores";
 
   // import { CultGames } from "./stores";
 
@@ -24,11 +24,10 @@
   let showPastGamesMode = false;
   let underConstructionMode = true;
   let visitorAlreadyProvedFancy = false;
+  let todayIsTheDate = "";
 
   onMount(async () => {
-    const response = await fetch(
-      `${backendBaseURL}/api/v1/getgameproposals`
-    );
+    const response = await fetch(`${backendBaseURL}/api/v1/getgameproposals`);
 
     gameProposals = await response.json();
 
@@ -36,10 +35,12 @@
 
     lastMomentOfToday = getLastMomentOfTodayFromDate(new Date());
 
-    
+    alert(lastMomentOfToday);
+    const todayIsTheDate = lastMomentOfToday.split(" ")[0];
+
     currentGameOfTheDay = gameProposals.filter(
       (e) => e.expiryDateUTC === lastMomentOfToday
-      )[0];
+    )[0];
   });
 
   const changeShowDetails = () => {
@@ -107,7 +108,12 @@
     <h2>CULT Game Of The Day</h2>
 
     <p><br /></p>
-    <a href="https://time.is/UTC" target="_blank" style="color: white;"> UTC</a>
+    {#if lastMomentOfToday}
+      {lastMomentOfToday.substr(0, 10)}
+      <a href="https://time.is/UTC" target="_blank" style="color: white;">
+         UTC</a
+      >
+    {/if}
     <p><br /></p>
 
     {#if currentGameOfTheDay}
@@ -169,14 +175,10 @@
         {/each}
         <p><br /></p>
       {/if}
-
-
     {:else}
       <button on:click={() => proveVisitorIsFancy()}> This is Fancy </button>
     {/if}
-
   </div>
-
 </main>
 
 <style>
