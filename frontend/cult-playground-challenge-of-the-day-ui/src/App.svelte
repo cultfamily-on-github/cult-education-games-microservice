@@ -36,9 +36,10 @@
 
     lastMomentOfToday = getLastMomentOfTodayFromDate(new Date());
 
+    
     currentGameOfTheDay = gameProposals.filter(
       (e) => e.expiryDateUTC === lastMomentOfToday
-    )[0];
+      )[0];
   });
 
   const changeShowDetails = () => {
@@ -145,9 +146,7 @@
       </button>
       {#if showProposalsMode}
         {#each gameProposals as fb (fb.id)}
-        <br>
           {#if getDateFromString(fb.expiryDateUTC) >= getDateFromString(lastMomentOfToday) && fb.id !== currentGameOfTheDay.id}
-            <p><br /><br /><br /></p>
             <div in:scale out:fade={{ duration: 500 }}>
               <GameProposalItem item={fb} />
             </div>
@@ -163,7 +162,6 @@
       {#if showPastGamesMode}
         {#each gameProposals as fb (fb.id)}
           {#if getDateFromString(fb.expiryDateUTC) < getDateFromString(lastMomentOfToday)}
-            <p><br /><br /><br /></p>
             <div in:scale out:fade={{ duration: 500 }}>
               <GameOfThePastItem item={fb} />
             </div>

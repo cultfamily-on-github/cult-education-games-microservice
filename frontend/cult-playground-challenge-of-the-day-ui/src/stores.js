@@ -4,6 +4,8 @@ import { writable } from 'svelte/store'
 export const backendBaseURL = 'https://cultplayground.org'
 // export const backendBaseURL = 'http://localhost:8042' // for programming and testing
 
+// http://localhost:8042/api/v1/getgameproposals
+
 export const CultGames = writable([
   {
     id: 1,
@@ -38,7 +40,7 @@ export const CultGames = writable([
   {
     id: 5,
     rating: 9,
-    text: 'To all who use facebook: Offer each of your facebook friends 1.000 RVLT if they post a supportive statement regarding the CULTDAO.',
+    text: 'To all who use facebook: Offer each of your facebook friends via a public post 1.000 RVLT if they post a supportive statement regarding the CULTDAO.',
     utcDate: '2022-10-2',
   },
   {

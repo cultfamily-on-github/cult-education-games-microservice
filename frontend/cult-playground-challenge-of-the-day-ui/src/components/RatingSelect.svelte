@@ -1,7 +1,7 @@
 <script>
   import {createEventDispatcher} from 'svelte'
 
-  let selected = 10
+  let selected = 0
 
   const dispatch = createEventDispatcher()
 
