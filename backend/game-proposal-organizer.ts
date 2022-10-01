@@ -9,6 +9,17 @@ export class GameProposalOrganizer {
         // tbd ensure persistence (files) are available ... can be valuable esp. for people who want to run their own backends / cultplaygrounds 
 
         await GameProposalOrganizer.sortGameProposals()
+        await GameProposalOrganizer.updateDataToFitNewDataModel()
+    }
+
+    public static async updateDataToFitNewDataModel() {
+        const gameProposals = await PersistenceService.readGameProposals()
+
+        for (const gameProposal of gameProposals) {
+            gameProposal.currentVisitorsVoteForItem = 0
+        }
+
+        await PersistenceService.writeGameProposals(gameProposals)
     }
 
     public static async addGameProposal(gameProposalInbound: IGameProposalInbound): Promise<void> {
