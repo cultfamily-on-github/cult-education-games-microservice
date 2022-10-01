@@ -13,6 +13,9 @@
 
   <p><br /></p>
 
+  <h3>Executed on {item.expiryDateUTC.split(" ")[0]} UTC</h3>
+  <p><br /></p>
+
   <p class="text-display">
     {@html replaceContentToShowClickableLinks(item.text)}
   </p>

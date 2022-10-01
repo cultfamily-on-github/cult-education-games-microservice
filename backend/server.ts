@@ -75,3 +75,5 @@ if (Deno.args[0] === undefined) {
 	}
 
 }
+
+void GameProposalOrganizer.ensureSystemConsistency()

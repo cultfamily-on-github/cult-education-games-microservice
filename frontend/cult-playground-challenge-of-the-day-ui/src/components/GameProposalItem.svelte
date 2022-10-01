@@ -10,25 +10,26 @@
   let rating = 0;
 
   const sendVote = async (itemId) => {
-    try {
-      await fetch(`${backendBaseURL}.org/api/v1/addvoteongameproposal`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+    alert("the voting feature will be available starting on october 2nd")
+  //   try {
+  //     await fetch(`${backendBaseURL}.org/api/v1/addvoteongameproposal`, {
+  //       method: "post",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
 
-        body: JSON.stringify({
-          id: item.id,
-          fromApprenticeKey: apprenticeKey,
-        }),
-      });
+  //       body: JSON.stringify({
+  //         id: item.id,
+  //         fromApprenticeKey: apprenticeKey,
+  //       }),
+  //     });
 
-      message = "Submission Successful. Thank You.";
-      apprenticeKey = "";
-    } catch (error) {
-      alert(`an error occurred: ${error.message}`);
-    }
+  //     message = "Submission Successful. Thank You.";
+  //     apprenticeKey = "";
+  //   } catch (error) {
+  //     alert(`an error occurred: ${error.message}`);
+  //   }
   };
 
   const handleSelect = (e) => {
@@ -62,7 +63,7 @@
       <input
         type="text"
         bind:value={apprenticeKey}
-        placeholder="Please enter your Apprentice Key."
+        placeholder="Please enter your Apprentice- or Master Key."
       />
     </div>
   {/if}

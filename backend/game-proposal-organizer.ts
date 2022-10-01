@@ -5,6 +5,12 @@ import { DateDoctor } from "./date-doctor/date-doctor.ts"
 
 export class GameProposalOrganizer {
 
+    public static async ensureSystemConsistency() {
+        // tbd ensure persistence (files) are available ... can be valuable esp. for people who want to run their own backends / cultplaygrounds 
+
+        await GameProposalOrganizer.sortGameProposals()
+    }
+
     public static async addGameProposal(gameProposalInbound: IGameProposalInbound): Promise<void> {
 
         console.log(`adding game proposal ${JSON.stringify(gameProposalInbound)}`)
@@ -12,9 +18,9 @@ export class GameProposalOrganizer {
         const masterKeys = await PersistenceService.readMasterKeysFile()
 
         console.log("temp debug 1")
-        const masterKeyFileEntry: IMasterkeyFileEntry 
-        = masterKeys.filter((m: IMasterkeyFileEntry) => m.masterKey === gameProposalInbound.fromMasterKey)[0]
-        
+        const masterKeyFileEntry: IMasterkeyFileEntry
+            = masterKeys.filter((m: IMasterkeyFileEntry) => m.masterKey === gameProposalInbound.fromMasterKey)[0]
+
         console.log("temp debug 2")
 
         if (masterKeyFileEntry === undefined) {
@@ -33,10 +39,10 @@ export class GameProposalOrganizer {
             rating: 0,
             proposedBy: masterKeyFileEntry.socialMediaLink
         }
-        
+
         console.log("temp debug b")
         gameProposals.unshift(gameProposal)
-        
+
         console.log("temp debug c")
         await PersistenceService.writeGameProposals(gameProposals)
 
@@ -48,7 +54,7 @@ export class GameProposalOrganizer {
 
         const apprenticeKeys = await PersistenceService.readApprenticeKeysFile()
 
-        const apprenticeKeysEntry: IApprenticeKeyFileEntry = 
+        const apprenticeKeysEntry: IApprenticeKeyFileEntry =
             apprenticeKeys.filter((m: IApprenticeKeyFileEntry) => m.apprenticeKey === voteInbound.fromApprenticeKey)[0]
 
         if (apprenticeKeysEntry === undefined) {
@@ -78,18 +84,29 @@ export class GameProposalOrganizer {
     public static getNextFreeExpiryDate(gameProposals: IGameProposal[]): string {
 
         if (gameProposals.length === 0) {
-          return DateDoctor.getLastMomentOfTodayFromDate(new Date())
+            return DateDoctor.getLastMomentOfTodayFromDate(new Date())
         }
-        
+
         const sortOptions: ISortOptions[] = [
-          { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
+            { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
         ]
-    
+
         const sortedArray = SortService.sort(gameProposals, sortOptions)
-    
+
         const latestExpiryDateInList = sortedArray[0].expiryDateUTC
-    
+
         return DateDoctor.addOneDay(latestExpiryDateInList)
-    
-      }
+
+    }
+
+
+    public static async sortGameProposals() {
+        const sortOptions: ISortOptions[] = [
+            { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
+        ]
+
+        const gameProposals = await PersistenceService.readGameProposals()
+        const sortedArray = SortService.sort(gameProposals, sortOptions)
+        await PersistenceService.writeGameProposals(sortedArray)
+    }
 }
