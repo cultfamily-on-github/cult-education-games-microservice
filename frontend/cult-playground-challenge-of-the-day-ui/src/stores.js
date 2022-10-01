@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store'
 
 // will be sorted by rating and stored on backend - longterm perhaps also on-chain 
-export const backendBaseURL = 'https://cultplayground.org'
-// export const backendBaseURL = 'http://localhost:8042' // for programming and testing
+// export const backendBaseURL = 'https://cultplayground.org'
+export const backendBaseURL = 'http://localhost:8042' // for programming and testing
 
 // http://localhost:8042/api/v1/getgameproposals
 
@@ -28,7 +28,7 @@ export const CultGames = writable([
   {
     id: 4,
     rating: 9,
-    text: 'Find 2 people (neighbors, friends, colleagues, family members, ...) who do not have metamask.io yet. Explain to them how important it is to educate themselves around self-hosted wallets.',
+    text: 'Find 2 people (neighbors, friends, colleagues, family members, ...) who do not have browserwallet or a paper wallet yet. Explain to them how important it is to educate themselves around self-hosted wallets like metamask.io.',
     utcDate: '2022-10-01',
   },
   {

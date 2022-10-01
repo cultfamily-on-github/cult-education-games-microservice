@@ -90,18 +90,12 @@
     color: #fff;
   }
 
-  /* Make actual radio select invisible */
   [type='radio'] {
     opacity: 0;
   }
 
-  /* Use the sibling select */
   [type='radio']:checked ~ label {
     background: #ff6a95;
     color: #fff;
   }
-  /* [type='radio']:checked ~ label {
-    background: #ff6a95;
-    color: #fff;
-  } */
 </style>
