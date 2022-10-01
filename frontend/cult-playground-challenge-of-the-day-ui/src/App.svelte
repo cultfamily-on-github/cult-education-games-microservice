@@ -10,6 +10,7 @@
   import { fade, scale } from "svelte/transition";
   import { onMount } from "svelte";
   import { getLastMomentOfTodayFromDate, getDateFromString } from "./helpers";
+    import { backendBaseURL } from "./stores";
 
   // import { CultGames } from "./stores";
 
@@ -26,8 +27,7 @@
 
   onMount(async () => {
     const response = await fetch(
-      // `http://localhost:8042/api/v1/getgameproposals`
-      `https://cultplayground.org/api/v1/getgameproposals`
+      `${backendBaseURL}/api/v1/getgameproposals`
     );
 
     gameProposals = await response.json();
@@ -145,6 +145,7 @@
       </button>
       {#if showProposalsMode}
         {#each gameProposals as fb (fb.id)}
+        <!-- {getDateFromString(fb.expiryDateUTC)} vs. {getDateFromString(lastMomentOfToday)} -->
           {#if getDateFromString(fb.expiryDateUTC) >= getDateFromString(lastMomentOfToday) && fb.id !== currentGameOfTheDay.id}
             <p><br /><br /><br /></p>
             <div in:scale out:fade={{ duration: 500 }}>

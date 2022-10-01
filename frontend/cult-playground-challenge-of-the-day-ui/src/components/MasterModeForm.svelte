@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuidv4 } from "uuid";
-  import { CultGames } from "../stores";
+  import { backendBaseURL, CultGames } from "../stores";
   import Card from "./Card.svelte";
   import Button from "./buttons/SendButton.svelte";
   import RatingSelect from "./RatingSelect.svelte";
@@ -12,8 +12,7 @@
 
   const sendGameProposal = async () => {
     try {
-      // await fetch("http://localhost:8042/api/v1/addgameproposal", {
-      await fetch("http://cultplayground.org/api/v1/addgameproposal", {
+      await fetch(`${backendBaseURL}/api/v1/addgameproposal`, {
         method: "post",
         headers: {
           Accept: "application/json",

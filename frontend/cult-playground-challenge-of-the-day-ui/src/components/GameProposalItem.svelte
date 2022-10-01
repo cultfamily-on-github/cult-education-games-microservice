@@ -1,5 +1,6 @@
 <script>
   import { replaceContentToShowClickableLinks } from "../helpers";
+  import { backendBaseURL } from "../stores";
   import Card from "./Card.svelte";
   import RatingSelect from "./RatingSelect.svelte";
   
@@ -10,8 +11,7 @@
 
   const sendVote = async (itemId) => {
     try {
-      // await fetch("http://localhost:8042/api/v1/addvoteongameproposal", {
-      await fetch("http://cultplayground.org/api/v1/addvoteongameproposal", {
+      await fetch(`${backendBaseURL}.org/api/v1/addvoteongameproposal`, {
         method: "post",
         headers: {
           Accept: "application/json",

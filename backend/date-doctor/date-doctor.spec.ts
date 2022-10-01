@@ -20,7 +20,7 @@ import { DateDoctor } from "./date-doctor.ts"
 
 Deno.test("get date object from utc date", async () => {
 
-    const dt = new Date(Date.UTC(2022, 8, 30, 0,0 , 0, 0))
+    const dt = new Date(Date.UTC(2022, 9, 1, 0,0 , 0, 0))
 
     console.log(dt)
     
