@@ -83,7 +83,7 @@ export const getFormattedUTCDateFromDate = (date) => {
 
 export const getLastMomentOfTodayFromString = (input) => {
     const part1 = input.split(" ")[0]
-    const part2 = "00:00:00"
+    const part2 = "23:59:59"
 
     return `${part1} ${part2}`
 }

@@ -146,7 +146,6 @@
       {#if showProposalsMode}
         {#each gameProposals as fb (fb.id)}
         <br>
-        {getDateFromString(fb.expiryDateUTC)} <br> vs. <br> {getDateFromString(lastMomentOfToday)} <br>
           {#if getDateFromString(fb.expiryDateUTC) >= getDateFromString(lastMomentOfToday) && fb.id !== currentGameOfTheDay.id}
             <p><br /><br /><br /></p>
             <div in:scale out:fade={{ duration: 500 }}>
