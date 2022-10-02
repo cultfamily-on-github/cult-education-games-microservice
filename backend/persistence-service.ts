@@ -21,15 +21,18 @@ export class PersistenceService {
     public static getInstance() { // singleton pattern recommended for services like this
         if (PersistenceService.instance === undefined) {
             PersistenceService.instance = new PersistenceService()
-
-            setInterval(async () => {
-                await PersistenceService.instance.generateBackup()
-            }, 24 * 60 * 60 * 1000) // backup once a day
         }
 
         return PersistenceService.instance
     }
 
+
+    public startBackupInterval() {
+        setInterval(async () => {
+            console.log(`generating backup once a day`)
+            await PersistenceService.instance.generateBackup()
+        }, 24 * 60 * 60 * 1000) // backup once a day
+    }
 
     public async readGameProposals(): Promise<IGameProposal[]> {
         const gameProposals: IGameProposal[] = JSON.parse(await Deno.readTextFile(this.pathToGameProposals))

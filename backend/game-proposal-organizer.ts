@@ -6,7 +6,7 @@ import { DateDoctor } from "./date-doctor/date-doctor.ts"
 
 export class GameProposalOrganizer {
 
-    private static instance
+    private static instance: GameProposalOrganizer
     private persistenceService
 
     public static getInstance() { // singleton pattern recommended for services like this
@@ -30,12 +30,12 @@ export class GameProposalOrganizer {
 
 
     public async getGameProposals(): Promise<IGameProposal[]> {
-        return PersistenceService.readGameProposals()
+        return this.persistenceService.readGameProposals()
     }
 
     public async getExecutedOrStartedGames() {
 
-        const gameProposals = await PersistenceService.readGameProposals()
+        const gameProposals = await this.persistenceService.readGameProposals()
 
         const executedOrStartedGames: IGameProposal[] = []
 
@@ -52,19 +52,17 @@ export class GameProposalOrganizer {
 
     }
 
-    public async getFutureGames() {
-        const gameProposals: IGameProposal[] = await PersistenceService.readGameProposals()
-
+    public async getFutureGames(gameProposals: IGameProposal[]) {
         const futureGames: IGameProposal[] = []
 
         for (const gameProposal of gameProposals) {
-            const gameExpiryDate = gameProposal.expiryDateUTC
             const lastMomentOfToday = DateDoctor.getLastMomentOfTodayFromDate(new Date())
-
-            if (DateDoctor.isAfter(gameExpiryDate, lastMomentOfToday)) {
+            if (DateDoctor.isAfter(gameProposal.expiryDateUTC, lastMomentOfToday)) {
                 futureGames.push(gameProposal)
             }
+
         }
+
 
         return futureGames
     }
@@ -111,10 +109,10 @@ export class GameProposalOrganizer {
             throw new Error(errorMessage)
         }
 
-        const gameProposals = await PersistenceService.readGameProposals()
+        const gameProposals = await this.persistenceService.readGameProposals()
         console.log("temp debug a")
         const gameProposal: IGameProposal = {
-            id: (gameProposals[0] === undefined) ? 1 : gameProposals[0].id + 1, // we sort or use unshift accordingly before saving
+            id: (gameProposals[0] === undefined) ? 1 : (await this.getHighestID()) + 1, // we sort or use unshift accordingly before saving
             text: gameProposalInbound.text,
             proposalDateUTC: DateDoctor.getFormattedUTCDateFromDate(new Date()),
             expiryDateUTC: this.getNextFreeExpiryDate(gameProposals),
@@ -129,8 +127,17 @@ export class GameProposalOrganizer {
         console.log("temp debug c")
         await this.persistenceService.writeGameProposals(gameProposals)
 
-        console.log(`successfully added game proposal to ${PersistenceService.pathToGameProposals}`)
+        console.log(`successfully added game proposal to ${this.persistenceService.pathToGameProposals}`)
 
+    }
+
+    public async getHighestID(): Promise<number> {
+        const gameProposals = await this.persistenceService.readGameProposals()
+        let highestID = 0
+        for (const gameProposal of gameProposals) {
+            if (gameProposal.id > highestID) highestID = gameProposal.id
+        }
+        return highestID
     }
 
     public async addVoteOnGameProposal(voteInbound: IVoteInbound): Promise<number> {
@@ -177,43 +184,43 @@ export class GameProposalOrganizer {
 
         votes.unshift(vote)
 
-        await PersistenceService.writeVotes(votes)
+        await this.persistenceService.writeVotes(votes)
 
 
         const newRatingOfProposal = await this.updateRatingInGameProposalWithAverageRank(voteInbound.id, votes)
-
-        const updatedFutureGames = await  this.updateFutureGamesExpiryDatesAccordingToRating()
-        const executedOrStartedGames = await  this.getExecutedOrStartedGames()
+        const allGamesRaw = await this.getGameProposals()
+        const updatedFutureGames = await this.updateFutureGamesExpiryDatesAccordingToRating(allGamesRaw)
+        const executedOrStartedGames = await this.getExecutedOrStartedGames()
 
         const allGames = executedOrStartedGames.concat(updatedFutureGames)
 
         console.log(allGames)
         // await PersistenceService.writeGameProposals(allGames)
-        
+
         await this.sortGameProposalsByExpiryDate()
 
         return newRatingOfProposal
-        
+
     }
-    
-    public async updateFutureGamesExpiryDatesAccordingToRating(): Promise<IGameProposal[]> {
-        const futureGames = await this.getFutureGames()
+
+    public async updateFutureGamesExpiryDatesAccordingToRating(allGames: IGameProposal[]): Promise<IGameProposal[]> {
+        const futureGames = await this.getFutureGames(allGames)
 
         const sortedFutureGamesRaw = await this.sortGamesByRatingAndExpiryDate(futureGames)
 
         const lastMomentOfToday = DateDoctor.getLastMomentOfTodayFromDate(new Date())
-    
+
         let oneDayIntoTheFuture = DateDoctor.addOneDay(lastMomentOfToday)
-    
+
         const sortedFutureGames: IGameProposal[] = []
-    
+
         for (const futureGame of sortedFutureGamesRaw) {
-    
+
             futureGame.expiryDateUTC = oneDayIntoTheFuture
-    
+
             sortedFutureGames.push(futureGame)
             oneDayIntoTheFuture = DateDoctor.addOneDay(oneDayIntoTheFuture)
-    
+
         }
 
         return sortedFutureGames

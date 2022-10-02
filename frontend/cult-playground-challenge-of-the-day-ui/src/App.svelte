@@ -30,8 +30,9 @@
     gameProposals = await response.json();
 
     lastMomentOfToday = getLastMomentOfTodayFromDate(new Date());
+
     currentGameOfTheDay = gameProposals.filter(
-      (e) => e.expiryDateUTC === lastMomentOfToday
+      (e) => e.expiryDateUTC.substr(0, 10) === lastMomentOfToday.substr(0, 10)
     )[0];
   };
 
@@ -108,13 +109,11 @@
 
     <p><br /></p>
     {#if lastMomentOfToday}
-      {lastMomentOfToday.substr(0, 10)}
       <a href="https://time.is/UTC" target="_blank" style="color: white;">
         UTC</a
       >
     {/if}
     <p><br /></p>
-
     {#if currentGameOfTheDay}
       <!-- {JSON.stringify(currentGameOfTheDay)} -->
       <GameOfTheDayItem item={currentGameOfTheDay} />

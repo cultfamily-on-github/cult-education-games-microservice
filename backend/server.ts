@@ -93,4 +93,5 @@ if (Deno.args[0] === undefined) {
 
 }
 
-void gameProposalOrganizer.ensureSystemConsistency()
+await gameProposalOrganizer.ensureSystemConsistency()
+persistenceService.startBackupInterval()
