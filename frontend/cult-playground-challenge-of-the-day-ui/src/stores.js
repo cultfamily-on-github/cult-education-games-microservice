@@ -1,8 +1,7 @@
 import { writable } from 'svelte/store'
 
 // will be sorted by rating and stored on backend - longterm perhaps also on-chain 
-export const backendBaseURL = 'https://cultplayground.org'
-// export const backendBaseURL = 'http://localhost:8042' // for programming and testing
+export const backendBaseURL = 'http://localhost:8042'
 
 // http://localhost:8042/api/v1/getgameproposals
 
