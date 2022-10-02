@@ -6,38 +6,39 @@
   export let item;
   let message = "";
   let masterOrApprenticeKey = "";
-  let rating = 0;
-  let showVotingOptions = false;
 
   const sendVote = async (itemId) => {
-    alert("the voting feature will be available starting on october 2nd");
-    //   try {
-    //     await fetch(`${backendBaseURL}.org/api/v1/addvoteongameproposal`, {
-    //       method: "post",
-    //       headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json",
-    //       },
+    try {
+      const response = await fetch(
+        `${backendBaseURL}/api/v1/addvoteongameproposal`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
 
-    //       body: JSON.stringify({
-    //         id: item.id,
-    //         fromApprenticeKey: apprenticeKey,
-    //       }),
-    //     });
+          body: JSON.stringify({
+            id: item.id,
+            fromKey: masterOrApprenticeKey,
+            rating: item.currentVisitorsVoteForItem
+          }),
+        }
+      );
 
-    //     message = "Submission Successful. Thank You.";
-    //     apprenticeKey = "";
-    //   } catch (error) {
-    //     alert(`an error occurred: ${error.message}`);
-    //   }
-  };
+      const result = await response.json();
 
-  const vote = () => {
-    showVotingOptions = !showVotingOptions;
+      message = result.message;
+      item.rating = result.newRatingOfProposal;
+      masterOrApprenticeKey = "";
+
+    } catch (error) {
+      alert(`an error occurred: ${error.message}`);
+    }
   };
 
   const clickValue = (valueClicked) => {
-    item.currentVisitorsVoteForItem = valueClicked
+    item.currentVisitorsVoteForItem = valueClicked;
   };
 </script>
 
@@ -59,64 +60,149 @@
     </div>
   {:else}
     <p><br /></p>
-    <div class="color-of-body">
-      <!-- you can dispatch the info on which item visitor is currently voting - updating the display for the other items...  -->
 
-      <button class="button-colors-on-Card" on:click={() => vote()}
-        >Vote on this Proposal</button
-      >
-    </div>
+    <!-- <RatingSelect on:rating-select={handleSelect} /> -->
 
-    {#if showVotingOptions}
-      <!-- <RatingSelect on:rating-select={handleSelect} /> -->
-
-      <ul class="rating">
-        <li>
-          <input type="radio" id="num1"on:change={() => clickValue(1)} />
-          <label class="{item.currentVisitorsVoteForItem===1 ? "labelActive" : "labelInActive"}" for="num1">1</label>
-        </li>
-        <li>
-          <input type="radio" id="num2"on:change={() => clickValue(2)} checked={item.currentVisitorsVoteForItem===2} />
-          <label class="{item.currentVisitorsVoteForItem===2 ? "labelActive" : "labelInActive"}" for="num2">2</label>
-        </li>
-        <li>
-          <input type="radio" id="num3"on:change={() => clickValue(3)} checked={item.currentVisitorsVoteForItem===3} />
-          <label class="{item.currentVisitorsVoteForItem===3 ? "labelActive" : "labelInActive"}" for="num3">3</label>
-        </li>
-        <li>
-          <input type="radio" id="num4"on:change={() => clickValue(4)} checked={item.currentVisitorsVoteForItem===4} />
-          <label class="{item.currentVisitorsVoteForItem===4 ? "labelActive" : "labelInActive"}" for="num4">4</label>
-        </li>
-        <li>
-          <input type="radio" id="num5"on:change={() => clickValue(5)} checked={item.currentVisitorsVoteForItem===5} />
-          <label class="{item.currentVisitorsVoteForItem===5 ? "labelActive" : "labelInActive"}" for="num5">5</label>
-        </li>
-        <li>
-          <input type="radio" id="num6"on:change={() => clickValue(6)} checked={item.currentVisitorsVoteForItem===6} />
-          <label class="{item.currentVisitorsVoteForItem===6 ? "labelActive" : "labelInActive"}" for="num6">6</label>
-        </li>
-        <li>
-          <input type="radio" id="num7"on:change={() => clickValue(7)} checked={item.currentVisitorsVoteForItem===7} />
-          <label class="{item.currentVisitorsVoteForItem===7 ? "labelActive" : "labelInActive"}" for="num7">7</label>
-        </li>
-        <li>
-          <input type="radio" id="num8"on:change={() => clickValue(8)} checked={item.currentVisitorsVoteForItem===8} />
-          <label class="{item.currentVisitorsVoteForItem===8 ? "labelActive" : "labelInActive"}" for="num8">8</label>
-        </li>
-        <li>
-          <input type="radio" id="num9" on:change={() => clickValue(9)} checked={item.currentVisitorsVoteForItem===9} />
-          <label class="{item.currentVisitorsVoteForItem===9 ? "labelActive" : "labelInActive"}" for="num9">9</label>
-        </li>
-        <li>
-          <input type="radio" id="num10" on:change={() => clickValue(10)} checked={item.currentVisitorsVoteForItem===10} />
-          <label class="{item.currentVisitorsVoteForItem===10 ? "labelActive" : "labelInActive"}" for="num10">10</label>
-        </li>
-      </ul>
-      
-    {/if}
+    <ul class="rating">
+      <li>
+        <input type="radio" id="num1" on:change={() => clickValue(1)} />
+        <label
+          class={item.currentVisitorsVoteForItem === 1
+            ? "labelActive"
+            : "labelInActive"}
+          for="num1">1</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num2"
+          on:change={() => clickValue(2)}
+          checked={item.currentVisitorsVoteForItem === 2}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 2
+            ? "labelActive"
+            : "labelInActive"}
+          for="num2">2</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num3"
+          on:change={() => clickValue(3)}
+          checked={item.currentVisitorsVoteForItem === 3}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 3
+            ? "labelActive"
+            : "labelInActive"}
+          for="num3">3</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num4"
+          on:change={() => clickValue(4)}
+          checked={item.currentVisitorsVoteForItem === 4}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 4
+            ? "labelActive"
+            : "labelInActive"}
+          for="num4">4</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num5"
+          on:change={() => clickValue(5)}
+          checked={item.currentVisitorsVoteForItem === 5}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 5
+            ? "labelActive"
+            : "labelInActive"}
+          for="num5">5</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num6"
+          on:change={() => clickValue(6)}
+          checked={item.currentVisitorsVoteForItem === 6}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 6
+            ? "labelActive"
+            : "labelInActive"}
+          for="num6">6</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num7"
+          on:change={() => clickValue(7)}
+          checked={item.currentVisitorsVoteForItem === 7}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 7
+            ? "labelActive"
+            : "labelInActive"}
+          for="num7">7</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num8"
+          on:change={() => clickValue(8)}
+          checked={item.currentVisitorsVoteForItem === 8}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 8
+            ? "labelActive"
+            : "labelInActive"}
+          for="num8">8</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num9"
+          on:change={() => clickValue(9)}
+          checked={item.currentVisitorsVoteForItem === 9}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 9
+            ? "labelActive"
+            : "labelInActive"}
+          for="num9">9</label
+        >
+      </li>
+      <li>
+        <input
+          type="radio"
+          id="num10"
+          on:change={() => clickValue(10)}
+          checked={item.currentVisitorsVoteForItem === 10}
+        />
+        <label
+          class={item.currentVisitorsVoteForItem === 10
+            ? "labelActive"
+            : "labelInActive"}
+          for="num10">10</label
+        >
+      </li>
+    </ul>
   {/if}
 
-  {#if rating > 0}
+  {#if item.currentVisitorsVoteForItem > 0 && message === ""}
     <div class="input-group">
       <input
         type="text"
@@ -125,6 +211,7 @@
       />
     </div>
   {/if}
+
   {#if masterOrApprenticeKey !== ""}
     <p><br /></p>
     <div class="color-of-body">
@@ -136,8 +223,7 @@
 </Card>
 
 <style>
-
-.rating {
+  .rating {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -174,19 +260,20 @@
     color: #fff;
   }
 
-  [type='radio'] {
+  [type="radio"] {
     opacity: 0;
   }
-  
+
   /* [type='radio']:marked ~ label {
     background: #ff6a95;
     color: #fff;
   } */
-  .labelActive, .labelInActive:hover {
+  .labelActive,
+  .labelInActive:hover {
     background: #ff6a95;
     color: #fff;
   }
-  
+
   .labelInActive {
     background: #f4f4f4;
   }

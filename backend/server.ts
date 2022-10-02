@@ -23,22 +23,35 @@ app.get('/api/v1/getgameproposals', async function (req, res) {
 })
 
 app.post('/api/v1/addgameproposal', async function (req, res) {
-	await GameProposalOrganizer.addGameProposal(req.body)
-	res.status(200).send("thank you")
+	try {
+		await GameProposalOrganizer.addGameProposal(req.body)
+		res.send({message: "Submission Successful. Thank You."})
+	} catch (error) {
+		const message = `did not add game proposal because ${error.message}`
+		console.log(message)
+		res.send({message})
+	}
 })
 
 app.post('/api/v1/addvoteongameproposal', async function (req, res) {
 	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
-	
-	await GameProposalOrganizer.addVoteOnGameProposal(req.body)
-	res.status(200).send("thank you")
+	try {
+	 	const newRatingOfProposal = await GameProposalOrganizer.addVoteOnGameProposal(req.body)
+		const message = "Vote Successful. Thank You."
+		res.send({message, newRatingOfProposal})
+	} catch (error) {
+		const message = `voting process failed because ${error.message}`
+		console.log(message)
+		res.send({message})		
+	}
 })
 
 
 if (Deno.args[0] === undefined) {
-	console.log("please specify a port by giving a parameter like 3000")
-} else {
 
+	console.log("please specify a port by giving a parameter like 3000")
+
+} else {
 
 	const port = Number(Deno.args[0]);
 

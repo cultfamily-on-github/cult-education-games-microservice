@@ -1,7 +1,8 @@
 import { PersistenceService } from "./persistence-service.ts"
-import { IGameProposal, IGameProposalInbound, IVote, IVoteInbound, IMasterkeyFileEntry, IApprenticeKeyFileEntry } from "./data-model.ts";
+import { IGameProposal, IGameProposalInbound, IVote, IMasterkeyFileEntry, IVoteInbound, IApprenticeKeyFileEntry } from "./data-model.ts";
 import { SortService, Direction, ISortOptions } from "https://deno.land/x/sort@v1.1.1/mod.ts"
 import { DateDoctor } from "./date-doctor/date-doctor.ts"
+
 
 export class GameProposalOrganizer {
 
@@ -16,7 +17,7 @@ export class GameProposalOrganizer {
         const gameProposals = await PersistenceService.readGameProposals()
 
         for (const gameProposal of gameProposals) {
-            gameProposal.currentVisitorsVoteForItem = 0
+            // nothing to be updated atm
         }
 
         await PersistenceService.writeGameProposals(gameProposals)
@@ -61,26 +62,36 @@ export class GameProposalOrganizer {
 
     }
 
-    public static async addVoteOnGameProposal(voteInbound: IVoteInbound): Promise<void> {
+    public static async addVoteOnGameProposal(voteInbound: IVoteInbound): Promise<number> {
 
         const apprenticeKeys = await PersistenceService.readApprenticeKeysFile()
+        const masterKeys = await PersistenceService.readMasterKeysFile()
 
         const apprenticeKeysEntry: IApprenticeKeyFileEntry =
-            apprenticeKeys.filter((m: IApprenticeKeyFileEntry) => m.apprenticeKey === voteInbound.fromApprenticeKey)[0]
+            apprenticeKeys.filter((m: IApprenticeKeyFileEntry) => m.apprenticeKey === voteInbound.fromKey)[0]
+
+        let masterKeyFileEntry: IMasterkeyFileEntry
 
         if (apprenticeKeysEntry === undefined) {
-            const errorMessage = `the apprentice key ${voteInbound.fromApprenticeKey} might be wrong.`
-            console.log(errorMessage)
-            throw new Error(errorMessage)
+
+            masterKeyFileEntry = masterKeys.filter((m: IMasterkeyFileEntry) => m.masterKey === voteInbound.fromKey)[0]
+
+            if (masterKeyFileEntry === undefined) {
+                const errorMessage = `the key ${voteInbound.fromKey} might be wrong.`
+                console.log(errorMessage)
+                throw new Error(errorMessage)
+            }
         }
 
         console.log(`adding vote on game proposal ${JSON.stringify(voteInbound)}`)
+
+        const voteBy = (apprenticeKeysEntry === undefined) ? masterKeyFileEntry.socialMediaLink : apprenticeKeysEntry.socialMediaLink
 
         const vote: IVote = {
             id: voteInbound.id,
             votingDate: DateDoctor.getFormattedUTCDateFromDate(new Date()),
             rating: voteInbound.rating,
-            voteBy: apprenticeKeysEntry.socialMediaLink
+            voteBy
         }
 
         const votes: IVote[] = await PersistenceService.readVotes()
@@ -89,6 +100,39 @@ export class GameProposalOrganizer {
 
         await PersistenceService.writeVotes(votes)
 
+
+        const newRatingOfProposal = await GameProposalOrganizer.updateRatingInGameProposalWithAverageRank(voteInbound.id, votes)
+
+        return newRatingOfProposal
+
+    }
+
+
+    public static async updateRatingInGameProposalWithAverageRank(id: number, votes: IVote[]): Promise<number> {
+
+        let sum = 0
+        let counter = 0
+
+        for (const vote of votes) {
+
+            sum = sum + vote.rating
+
+            counter++
+        }
+
+        const roundedAverageRating = Math.round((sum / counter) * 10) / 10
+
+        const gameProposals = await PersistenceService.readGameProposals()
+
+        for (const gameProposal of gameProposals) {
+            if (gameProposal.id === id) {
+                gameProposal.rating = roundedAverageRating
+            }
+        }
+
+        await PersistenceService.writeGameProposals(gameProposals)
+
+        return roundedAverageRating
     }
 
 
@@ -119,5 +163,7 @@ export class GameProposalOrganizer {
         const gameProposals = await PersistenceService.readGameProposals()
         const sortedArray = SortService.sort(gameProposals, sortOptions)
         await PersistenceService.writeGameProposals(sortedArray)
+
     }
+
 }

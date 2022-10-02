@@ -1,18 +1,14 @@
 <script>
-  import { v4 as uuidv4 } from "uuid";
-  import { backendBaseURL, CultGames } from "../stores";
+  import { backendBaseURL } from "../stores";
   import Card from "./Card.svelte";
-  import Button from "./buttons/SendButton.svelte";
-  import RatingSelect from "./RatingSelect.svelte";
 
   let text = "";
   let masterKey = "";
-  let rating = 10;
   let message;
 
   const sendGameProposal = async () => {
     try {
-      await fetch(`${backendBaseURL}/api/v1/addgameproposal`, {
+      const response = await fetch(`${backendBaseURL}/api/v1/addgameproposal`, {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -25,9 +21,13 @@
         }),
       });
 
-      message = "Submission Successful. Thank You.";
+      const result = await response.json()
+
+      message = result.message
+
       text = "";
       masterKey = "";
+
     } catch (error) {
       alert(`an error occurred: ${error.message}`);
     }
@@ -38,7 +38,7 @@
   <!-- <RatingSelect on:rating-select={handleSelect} /> -->
   {#if message}
     <div class="message">
-      {message}
+      {message} 
       <p><br></p>
     </div>
   {/if}

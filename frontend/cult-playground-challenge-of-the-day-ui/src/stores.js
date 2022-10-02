@@ -8,6 +8,12 @@ export const backendBaseURL = 'http://localhost:8042' // for programming and tes
 
 export const CultGames = writable([
   {
+    id: 0,
+    rating: 10,
+    text: 'Ask your landlord if you are allowed to pay the rent via CULT or RVLT. Consider tweeting about it.',
+    utcDate: '2022-9-28',
+  },
+  {
     id: 1,
     rating: 10,
     text: 'Ensure the following hashtags are trending on Twitter today: #StarlinkIsCULT #RumbleIsCULT #CULTDAO. You might want to do so by retweeting: https://twitter.com/Peer2peerE/status/1574787191489941506?s=20&t=wUyNpuR8Sc7DtcPo7lp37A',

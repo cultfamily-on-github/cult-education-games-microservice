@@ -3,6 +3,7 @@ export interface IMasterkeyFileEntry {
     masterKey: string
 }
 
+
 export interface IApprenticeKeyFileEntry {
     socialMediaLink: string
     apprenticeKey: string
@@ -26,7 +27,7 @@ export interface IGameProposal {
 export interface IVoteInbound {
     id: number,
     rating: number,
-    fromApprenticeKey: string
+    fromKey: string
 }
 
 export interface IVote {
