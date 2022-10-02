@@ -183,7 +183,7 @@ export class GameProposalOrganizer {
         const executedOrStartedGames = await this.getExecutedOrStartedGames()
         const allGames = executedOrStartedGames.concat(updatedFutureGames)
 
-        console.log(allGames)
+        //  console.log(allGames)
         // await PersistenceService.writeGameProposals(allGames)
 
         // const allGamesToBeStored: IGameProposal[] = this.sortGameProposalsByExpiryDate(allGames)

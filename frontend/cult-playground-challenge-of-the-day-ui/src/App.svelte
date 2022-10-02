@@ -12,8 +12,6 @@
   import { getLastMomentOfTodayFromDate, getDateFromString } from "./helpers";
   import { backendBaseURL } from "./stores";
 
-  // import { CultGames } from "./stores";
-
   let gameProposals = [];
   let currentGameOfTheDay;
   let lastMomentOfToday;
@@ -22,8 +20,6 @@
   let showMasterMode = false;
   let showProposalsMode = false;
   let showPastGamesMode = false;
-  let underConstructionMode = true;
-  let visitorAlreadyProvedFancy = false;
 
   const getDataInPlace = async () => {
     const response = await fetch(`${backendBaseURL}/api/v1/getgameproposals`);
@@ -38,10 +34,10 @@
 
   onMount(getDataInPlace);
 
-  const handleReloadOfCultGameProposalsRecommended = async () => {
-    alert("super");
-    // await getDataInPlace();
-  };
+  // const handleReloadOfCultGameProposalsRecommended = async () => {
+  //   alert("super");
+  //   // await getDataInPlace();
+  // };
 
   const changeShowDetails = () => {
     showDetails = !showDetails;
@@ -92,10 +88,6 @@
       showPastGamesMode = false;
     }
   };
-
-  const proveVisitorIsFancy = () => {
-    visitorAlreadyProvedFancy = true;
-  };
 </script>
 
 <Seo
@@ -110,7 +102,7 @@
     <p><br /></p>
     {#if lastMomentOfToday}
       <a href="https://time.is/UTC" target="_blank" style="color: white;">
-        UTC</a
+        {lastMomentOfToday.split(" ")[0]} UTC</a
       >
     {/if}
     <p><br /></p>
@@ -119,65 +111,68 @@
       <GameOfTheDayItem item={currentGameOfTheDay} />
     {/if}
 
-    {#if underConstructionMode || visitorAlreadyProvedFancy}
-      <Levels />
+    <Levels />
 
-      <button on:click={() => changeShowDetails()}> Show Details </button>
-      {#if showDetails}
-        <HowItWorks />
-      {/if}
-
-      <p><br /></p>
-
-      <button on:click={() => changeShowPhilosophy()}> Show Philosophy </button>
-      {#if showPhilosophy}
-        <Philosophy />
-      {/if}
-
-      <p><br /></p>
-
-      <button on:click={() => changeShowMasterMode()}>
-        Add Game Proposal
-      </button>
-      {#if showMasterMode}
-        <MasterModeForm
-          on:reload-of-gameproposals-recommended={handleReloadOfCultGameProposalsRecommended}
-        />
-      {/if}
-
-      <p><br /></p>
-
-      <button on:click={() => changeShowProposalsMode()}>
-        Show Game Proposals
-      </button>
-      {#if showProposalsMode}
-        {#each gameProposals as fb (fb.id)}
-          {#if getDateFromString(fb.expiryDateUTC) >= getDateFromString(lastMomentOfToday) && fb.id !== currentGameOfTheDay.id}
-            <div in:scale out:fade={{ duration: 500 }}>
-              <GameProposalItem item={fb} />
-            </div>
-          {/if}
-        {/each}
-      {/if}
-
-      <p><br /></p>
-      <button on:click={() => changeShowPastGamesMode()}>
-        Show Past Games
-      </button>
-
-      {#if showPastGamesMode}
-        {#each gameProposals as fb (fb.id)}
-          {#if getDateFromString(fb.expiryDateUTC) < getDateFromString(lastMomentOfToday)}
-            <div in:scale out:fade={{ duration: 500 }}>
-              <GameOfThePastItem item={fb} />
-            </div>
-          {/if}
-        {/each}
-        <p><br /></p>
-      {/if}
-    {:else}
-      <button on:click={() => proveVisitorIsFancy()}> This is Fancy </button>
+    <button on:click={() => changeShowDetails()}> Show Details </button>
+    {#if showDetails}
+      <HowItWorks />
     {/if}
+
+    <p><br /></p>
+
+    <button on:click={() => changeShowPhilosophy()}> Show Philosophy </button>
+    {#if showPhilosophy}
+      <Philosophy />
+    {/if}
+
+    <p><br /></p>
+
+    <button on:click={() => changeShowMasterMode()}> Add Game Proposal </button>
+    {#if showMasterMode}
+      <MasterModeForm />
+      <!-- The following would be nice to have imo so that the proposer can see his newly submitted proposal more or less directly. 
+        PR is welcome - I struggled a bit with an error while trying the following:
+        <MasterModeForm
+        on:reload-of-gameproposals-recommended={handleReloadOfCultGameProposalsRecommended}
+      /> -->
+    {/if}
+
+    <p><br /></p>
+
+    <button on:click={() => changeShowProposalsMode()}>
+      Show Game Proposals
+    </button>
+    {#if showProposalsMode}
+      {#each gameProposals as fb (fb.id)}
+        {#if getDateFromString(fb.expiryDateUTC) >= getDateFromString(lastMomentOfToday) && fb.id !== currentGameOfTheDay.id}
+          <div in:scale out:fade={{ duration: 500 }}>
+            <GameProposalItem item={fb} />
+          </div>
+        {/if}
+      {/each}
+    {/if}
+
+    <p><br /></p>
+    <button on:click={() => changeShowPastGamesMode()}>
+      Show Past Games
+    </button>
+
+    {#if showPastGamesMode}
+      {#each gameProposals as fb (fb.id)}
+        {#if getDateFromString(fb.expiryDateUTC) < getDateFromString(lastMomentOfToday)}
+          <div in:scale out:fade={{ duration: 500 }}>
+            <GameOfThePastItem item={fb} />
+          </div>
+        {/if}
+      {/each}
+      <p><br /></p>
+    {/if}
+
+    <p><br /></p>
+
+    <a href="https://cultmagazine.org/" target="_blank">
+      <button> Explore Architectures of Freedom </button>
+    </a>
   </div>
 </main>
 
