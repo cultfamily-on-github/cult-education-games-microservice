@@ -56,6 +56,13 @@ export class DateDoctor {
     return date1 < date2
   }
 
+  public static isAfter(input1: string, input2: string) {
+    const date1 = DateDoctor.getDateFromString(input1)
+    const date2 = DateDoctor.getDateFromString(input2)
+
+    return date1 > date2
+  }
+
   public static getDateFromString(input: string) {
     const year = Number(input.substr(0, 4))
     const month = Number(input.substr(5, 2)) - 1

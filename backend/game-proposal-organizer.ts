@@ -6,28 +6,98 @@ import { DateDoctor } from "./date-doctor/date-doctor.ts"
 
 export class GameProposalOrganizer {
 
-    public static async ensureSystemConsistency() {
-        // tbd ensure persistence (files) are available ... can be valuable esp. for people who want to run their own backends / cultplaygrounds 
+    private static instance
+    private persistenceService
 
-        await GameProposalOrganizer.sortGameProposals()
-        await GameProposalOrganizer.updateDataToFitNewDataModel()
+    public static getInstance() { // singleton pattern recommended for services like this
+        if (GameProposalOrganizer.instance === undefined) {
+            GameProposalOrganizer.instance = new GameProposalOrganizer()
+        }
+
+        return GameProposalOrganizer.instance
     }
 
-    public static async updateDataToFitNewDataModel() {
+    public constructor() {
+        this.persistenceService = PersistenceService.getInstance()
+    }
+
+    public async ensureSystemConsistency() {
+        // tbd ensure persistence (files) are available ... can be valuable esp. for people who want to run their own backends / cultplaygrounds 
+
+        await this.sortGameProposalsByExpiryDate()
+        await this.updateDataToFitNewDataModel()
+    }
+
+
+    public async getGameProposals(): Promise<IGameProposal[]> {
+        return PersistenceService.readGameProposals()
+    }
+
+    public async getExecutedOrStartedGames() {
+
         const gameProposals = await PersistenceService.readGameProposals()
+
+        const executedOrStartedGames: IGameProposal[] = []
+
+        for (const gameProposal of gameProposals) {
+            const gameExpiryDate = gameProposal.expiryDateUTC
+            const lastMomentOfToday = DateDoctor.getLastMomentOfTodayFromDate(new Date())
+
+            if (DateDoctor.isAfter(gameExpiryDate, lastMomentOfToday) === false) {
+                executedOrStartedGames.push(gameProposal)
+            }
+        }
+
+        return executedOrStartedGames
+
+    }
+
+    public async getFutureGames() {
+        const gameProposals: IGameProposal[] = await PersistenceService.readGameProposals()
+
+        const futureGames: IGameProposal[] = []
+
+        for (const gameProposal of gameProposals) {
+            const gameExpiryDate = gameProposal.expiryDateUTC
+            const lastMomentOfToday = DateDoctor.getLastMomentOfTodayFromDate(new Date())
+
+            if (DateDoctor.isAfter(gameExpiryDate, lastMomentOfToday)) {
+                futureGames.push(gameProposal)
+            }
+        }
+
+        return futureGames
+    }
+
+
+    public async sortGamesByRatingAndExpiryDate(futureGames: IGameProposal[]): Promise<IGameProposal[]> {
+
+        const sortOptions: ISortOptions[] = [
+            { fieldName: 'rating', direction: Direction.DESCENDING },
+            { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
+        ]
+
+        return SortService.sort(futureGames, sortOptions)
+
+    }
+
+
+
+    public async updateDataToFitNewDataModel() {
+        const gameProposals = await this.persistenceService.readGameProposals()
 
         for (const gameProposal of gameProposals) {
             // nothing to be updated atm
         }
 
-        await PersistenceService.writeGameProposals(gameProposals)
+        await this.persistenceService.writeGameProposals(gameProposals)
     }
 
-    public static async addGameProposal(gameProposalInbound: IGameProposalInbound): Promise<void> {
+    public async addGameProposal(gameProposalInbound: IGameProposalInbound): Promise<void> {
 
         console.log(`adding game proposal ${JSON.stringify(gameProposalInbound)}`)
 
-        const masterKeys = await PersistenceService.readMasterKeysFile()
+        const masterKeys = await this.persistenceService.readMasterKeysFile()
 
         console.log("temp debug 1")
         const masterKeyFileEntry: IMasterkeyFileEntry
@@ -47,30 +117,31 @@ export class GameProposalOrganizer {
             id: (gameProposals[0] === undefined) ? 1 : gameProposals[0].id + 1, // we sort or use unshift accordingly before saving
             text: gameProposalInbound.text,
             proposalDateUTC: DateDoctor.getFormattedUTCDateFromDate(new Date()),
-            expiryDateUTC: GameProposalOrganizer.getNextFreeExpiryDate(gameProposals),
+            expiryDateUTC: this.getNextFreeExpiryDate(gameProposals),
             rating: 0,
-            proposedBy: masterKeyFileEntry.socialMediaLink
+            proposedBy: masterKeyFileEntry.socialMediaLink,
+            currentVisitorsVoteForItem: 0
         }
 
         console.log("temp debug b")
         gameProposals.unshift(gameProposal)
 
         console.log("temp debug c")
-        await PersistenceService.writeGameProposals(gameProposals)
+        await this.persistenceService.writeGameProposals(gameProposals)
 
         console.log(`successfully added game proposal to ${PersistenceService.pathToGameProposals}`)
 
     }
 
-    public static async addVoteOnGameProposal(voteInbound: IVoteInbound): Promise<number> {
+    public async addVoteOnGameProposal(voteInbound: IVoteInbound): Promise<number> {
 
-        const apprenticeKeys = await PersistenceService.readApprenticeKeysFile()
-        const masterKeys = await PersistenceService.readMasterKeysFile()
+        const apprenticeKeys = await this.persistenceService.readApprenticeKeysFile()
+        const masterKeys = await this.persistenceService.readMasterKeysFile()
 
         const apprenticeKeysEntry: IApprenticeKeyFileEntry =
             apprenticeKeys.filter((m: IApprenticeKeyFileEntry) => m.apprenticeKey === voteInbound.fromKey)[0]
 
-        let masterKeyFileEntry: IMasterkeyFileEntry
+        let masterKeyFileEntry: IMasterkeyFileEntry = {} as IMasterkeyFileEntry
 
         if (apprenticeKeysEntry === undefined) {
 
@@ -82,8 +153,8 @@ export class GameProposalOrganizer {
                 throw new Error(errorMessage)
             }
         }
-        
-        const votes: IVote[] = await PersistenceService.readVotes()
+
+        const votes: IVote[] = await this.persistenceService.readVotes()
 
         const voteBy = (apprenticeKeysEntry === undefined) ? masterKeyFileEntry.socialMediaLink : apprenticeKeysEntry.socialMediaLink
 
@@ -109,29 +180,61 @@ export class GameProposalOrganizer {
         await PersistenceService.writeVotes(votes)
 
 
-        const newRatingOfProposal = await GameProposalOrganizer.updateRatingInGameProposalWithAverageRank(voteInbound.id, votes)
+        const newRatingOfProposal = await this.updateRatingInGameProposalWithAverageRank(voteInbound.id, votes)
+
+        const updatedFutureGames = await  this.updateFutureGamesExpiryDatesAccordingToRating()
+        const executedOrStartedGames = await  this.getExecutedOrStartedGames()
+
+        const allGames = executedOrStartedGames.concat(updatedFutureGames)
+
+        console.log(allGames)
+        // await PersistenceService.writeGameProposals(allGames)
+        
+        await this.sortGameProposalsByExpiryDate()
 
         return newRatingOfProposal
+        
+    }
+    
+    public async updateFutureGamesExpiryDatesAccordingToRating(): Promise<IGameProposal[]> {
+        const futureGames = await this.getFutureGames()
 
+        const sortedFutureGamesRaw = await this.sortGamesByRatingAndExpiryDate(futureGames)
+
+        const lastMomentOfToday = DateDoctor.getLastMomentOfTodayFromDate(new Date())
+    
+        let oneDayIntoTheFuture = DateDoctor.addOneDay(lastMomentOfToday)
+    
+        const sortedFutureGames: IGameProposal[] = []
+    
+        for (const futureGame of sortedFutureGamesRaw) {
+    
+            futureGame.expiryDateUTC = oneDayIntoTheFuture
+    
+            sortedFutureGames.push(futureGame)
+            oneDayIntoTheFuture = DateDoctor.addOneDay(oneDayIntoTheFuture)
+    
+        }
+
+        return sortedFutureGames
     }
 
-
-    public static async updateRatingInGameProposalWithAverageRank(id: number, votes: IVote[]): Promise<number> {
+    public async updateRatingInGameProposalWithAverageRank(id: number, votes: IVote[]): Promise<number> {
 
         let sum = 0
         let counter = 0
 
         for (const vote of votes) {
 
-            if (id === vote.id)  {
-                sum = sum + vote.rating   
+            if (id === vote.id) {
+                sum = sum + vote.rating
                 counter++
             }
         }
 
         const roundedAverageRating = Number((sum / counter).toFixed(1))
 
-        const gameProposals = await PersistenceService.readGameProposals()
+        const gameProposals = await this.persistenceService.readGameProposals()
 
         for (const gameProposal of gameProposals) {
             if (gameProposal.id === id) {
@@ -139,13 +242,13 @@ export class GameProposalOrganizer {
             }
         }
 
-        await PersistenceService.writeGameProposals(gameProposals)
+        await this.persistenceService.writeGameProposals(gameProposals)
 
         return roundedAverageRating
     }
 
 
-    public static getNextFreeExpiryDate(gameProposals: IGameProposal[]): string {
+    public getNextFreeExpiryDate(gameProposals: IGameProposal[]): string {
 
         if (gameProposals.length === 0) {
             return DateDoctor.getLastMomentOfTodayFromDate(new Date())
@@ -163,15 +266,14 @@ export class GameProposalOrganizer {
 
     }
 
-
-    public static async sortGameProposals() {
+    public async sortGameProposalsByExpiryDate() {
         const sortOptions: ISortOptions[] = [
             { fieldName: 'expiryDateUTC', direction: Direction.DESCENDING }
         ]
 
-        const gameProposals = await PersistenceService.readGameProposals()
+        const gameProposals = await this.persistenceService.readGameProposals()
         const sortedArray = SortService.sort(gameProposals, sortOptions)
-        await PersistenceService.writeGameProposals(sortedArray)
+        await this.persistenceService.writeGameProposals(sortedArray)
 
     }
 

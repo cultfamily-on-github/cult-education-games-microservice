@@ -8,23 +8,27 @@ const app = opine();
 
 app.use(json());
 
-app.use(serveStatic(PersistenceService.pathToIndexHTML));
-app.use(serveStatic(PersistenceService.pathToAssets));
+const persistenceService: PersistenceService = PersistenceService.getInstance()
+const gameProposalOrganizer: GameProposalOrganizer = GameProposalOrganizer.getInstance()
+
+app.use(serveStatic(persistenceService.pathToIndexHTML));
+app.use(serveStatic(persistenceService.pathToAssets));
 
 app.use(opineCors());
 
+
 app.get('/', function (req, res) {
-	console.log(`serving index html from ${PersistenceService.pathToIndexHTML}`);
-	res.sendFile(`${PersistenceService.pathToIndexHTML}/index.html`);
+	console.log(`serving index html from ${persistenceService.pathToIndexHTML}`);
+	res.sendFile(`${persistenceService.pathToIndexHTML}/index.html`);
 });
 
 app.get('/api/v1/getgameproposals', async function (req, res) {
-	res.send(await PersistenceService.readGameProposals());
+	res.send(await gameProposalOrganizer.getGameProposals());
 })
 
 app.post('/api/v1/addgameproposal', async function (req, res) {
 	try {
-		await GameProposalOrganizer.addGameProposal(req.body)
+		await gameProposalOrganizer.addGameProposal(req.body)
 		res.send({message: "Submission Successful. Thank You."})
 	} catch (error) {
 		const message = `did not add game proposal because ${error.message}`
@@ -36,7 +40,7 @@ app.post('/api/v1/addgameproposal', async function (req, res) {
 app.post('/api/v1/addvoteongameproposal', async function (req, res) {
 	console.log(`received the following vote on gameproposal ${JSON.stringify(req.body)}`);
 	try {
-	 	const newRatingOfProposal = await GameProposalOrganizer.addVoteOnGameProposal(req.body)
+	 	const newRatingOfProposal = await gameProposalOrganizer.addVoteOnGameProposal(req.body)
 		const message = "Vote Successful. Thank You."
 		res.send({message, newRatingOfProposal})
 	} catch (error) {
@@ -89,4 +93,4 @@ if (Deno.args[0] === undefined) {
 
 }
 
-void GameProposalOrganizer.ensureSystemConsistency()
+void gameProposalOrganizer.ensureSystemConsistency()

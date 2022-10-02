@@ -21,7 +21,7 @@ export interface IGameProposal {
     expiryDateUTC: string,
     rating: number,
     proposedBy: string,
-    currentVisitorsVoteForItem: string
+    currentVisitorsVoteForItem: number
 }
 
 export interface IVoteInbound {

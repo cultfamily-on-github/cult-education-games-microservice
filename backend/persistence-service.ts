@@ -3,39 +3,76 @@ import { IGameProposal, IVote, IMasterkeyFileEntry, IApprenticeKeyFileEntry } fr
 
 export class PersistenceService {
 
-    public static readonly pathToIndexHTML = `${Deno.cwd()}/docs`;
-    public static readonly pathToAssets = `${PersistenceService.pathToIndexHTML}/assets`;
-    public static readonly pathToCertificates = '/etc/letsencrypt/live/cultplayground.org';
+    public readonly pathToIndexHTML = `${Deno.cwd()}/docs`;
+    public readonly pathToAssets = `${this.pathToIndexHTML}/assets`;
+    public readonly pathToCertificates = '/etc/letsencrypt/live/cultplayground.org';
 
-    public static pathToGameProposals = `${Deno.cwd()}/operational-data/game-proposals.json`;
-    public static pathToMasterKeys = `${Deno.cwd()}/operational-data/master-keys.json`;
-    public static pathToApprenticeKeys = `${Deno.cwd()}/operational-data/apprentice-keys.json`;
-    public static pathToVotes = `${Deno.cwd()}/operational-data/votes.json`;
+    public pathToGameProposals = `${Deno.cwd()}/operational-data/game-proposals.json`;
+    public pathToMasterKeys = `${Deno.cwd()}/operational-data/master-keys.json`;
+    public pathToApprenticeKeys = `${Deno.cwd()}/operational-data/apprentice-keys.json`;
+    public pathToVotes = `${Deno.cwd()}/operational-data/votes.json`;
+    public pathToGameProposalsBackup = `${Deno.cwd()}/operational-data/game-proposals-backup.json`;
+    public pathToMasterKeysBackup = `${Deno.cwd()}/operational-data/master-keys-backup.json`;
+    public pathToApprenticeKeysBackup = `${Deno.cwd()}/operational-data/apprentice-keys-backup.json`;
+    public pathToVotesBackup = `${Deno.cwd()}/operational-data/votes-backup.json`;
 
-    public static async readGameProposals(): Promise<IGameProposal[]> {
-        const gameProposals: IGameProposal[] = JSON.parse(await Deno.readTextFile(PersistenceService.pathToGameProposals))
+    private static instance: PersistenceService
+    
+    public static getInstance() { // singleton pattern recommended for services like this
+        if (PersistenceService.instance === undefined) {
+            PersistenceService.instance = new PersistenceService()
+
+            setInterval(async () => {
+                await PersistenceService.instance.generateBackup()
+            }, 24 * 60 * 60 * 1000) // backup once a day
+        }
+
+        return PersistenceService.instance
+    }
+
+
+    public async readGameProposals(): Promise<IGameProposal[]> {
+        const gameProposals: IGameProposal[] = JSON.parse(await Deno.readTextFile(this.pathToGameProposals))
         return gameProposals
     }
 
-    public static async readVotes(): Promise<IVote[]> {
-        const votes: IVote[] = JSON.parse(await Deno.readTextFile(PersistenceService.pathToVotes))
+    public async readVotes(): Promise<IVote[]> {
+        const votes: IVote[] = JSON.parse(await Deno.readTextFile(this.pathToVotes))
         return votes
     }
     
-    public static async readMasterKeysFile(): Promise<IMasterkeyFileEntry[]> {
-        return JSON.parse(await Deno.readTextFile(PersistenceService.pathToMasterKeys))
+    public async readMasterKeysFile(): Promise<IMasterkeyFileEntry[]> {
+        return JSON.parse(await Deno.readTextFile(this.pathToMasterKeys))
     }
 
-    public static async readApprenticeKeysFile(): Promise<IApprenticeKeyFileEntry[]> {
-        return JSON.parse(await Deno.readTextFile(PersistenceService.pathToApprenticeKeys))
+    public async readApprenticeKeysFile(): Promise<IApprenticeKeyFileEntry[]> {
+        return JSON.parse(await Deno.readTextFile(this.pathToApprenticeKeys))
     }
 
-    public static async writeGameProposals(gameProposals: IGameProposal[]): Promise<void> {
-        await Deno.writeTextFile(PersistenceService.pathToGameProposals, JSON.stringify(gameProposals))
+    public async writeGameProposals(gameProposals: IGameProposal[]): Promise<void> {
+        await Deno.writeTextFile(this.pathToGameProposals, JSON.stringify(gameProposals))
+    }
+    
+    public async writeVotes(votes: IVote[]): Promise<void> {
+        await Deno.writeTextFile(this.pathToVotes, JSON.stringify(votes))
+    }
+    
+    
+    public async generateBackup() {
+        
+        const gameProposals = await this.readGameProposals()
+        const apprenticeKeys = await this.readApprenticeKeysFile()
+        const masterKeys = await this.readMasterKeysFile()
+        const votes = await this.readVotes()
+        
+        await Deno.writeTextFile(this.pathToVotesBackup, JSON.stringify(votes))
+        await Deno.writeTextFile(this.pathToGameProposalsBackup, JSON.stringify(gameProposals))
+
+        await Deno.writeTextFile(this.pathToMasterKeysBackup, JSON.stringify(masterKeys))
+        await Deno.writeTextFile(this.pathToApprenticeKeysBackup, JSON.stringify(apprenticeKeys))
+
     }
 
-    public static async writeVotes(votes: IVote[]): Promise<void> {
-        await Deno.writeTextFile(PersistenceService.pathToVotes, JSON.stringify(votes))
-    }
+
 
 }
