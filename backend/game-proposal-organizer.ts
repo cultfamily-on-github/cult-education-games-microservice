@@ -82,10 +82,19 @@ export class GameProposalOrganizer {
                 throw new Error(errorMessage)
             }
         }
+        
+        const votes: IVote[] = await PersistenceService.readVotes()
+
+        const voteBy = (apprenticeKeysEntry === undefined) ? masterKeyFileEntry.socialMediaLink : apprenticeKeysEntry.socialMediaLink
+
+        const existingVoteOnGameProposal = votes.filter((v: IVote) => v.id === voteInbound.id && v.voteBy === voteBy)[0]
+
+        if (existingVoteOnGameProposal !== undefined) {
+            throw new Error(`you have already voted on this proposal. you gave it a ${existingVoteOnGameProposal.rating}.`)
+        }
 
         console.log(`adding vote on game proposal ${JSON.stringify(voteInbound)}`)
 
-        const voteBy = (apprenticeKeysEntry === undefined) ? masterKeyFileEntry.socialMediaLink : apprenticeKeysEntry.socialMediaLink
 
         const vote: IVote = {
             id: voteInbound.id,
@@ -94,7 +103,6 @@ export class GameProposalOrganizer {
             voteBy
         }
 
-        const votes: IVote[] = await PersistenceService.readVotes()
 
         votes.unshift(vote)
 
@@ -120,7 +128,7 @@ export class GameProposalOrganizer {
             counter++
         }
 
-        const roundedAverageRating = Math.round((sum / counter) * 10) / 10
+        const roundedAverageRating = Number((sum / counter).toFixed(1))
 
         const gameProposals = await PersistenceService.readGameProposals()
 
