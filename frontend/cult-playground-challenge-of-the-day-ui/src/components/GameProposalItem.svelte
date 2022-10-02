@@ -26,8 +26,11 @@
         }
       );
 
+      console.log("debug milestone 1")
+      
       const result = await response.json();
-
+      
+      console.log("debug milestone 2")
       message = result.message;
       item.rating = result.newRatingOfProposal;
       masterOrApprenticeKey = "";
