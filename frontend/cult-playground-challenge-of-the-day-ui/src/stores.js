@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store'
 
 // will be sorted by rating and stored on backend - longterm perhaps also on-chain 
-export const backendBaseURL = 'https://cultplayground.org'
-// export const backendBaseURL = 'http://localhost:8042' // for programming and testing
+// export const backendBaseURL = 'https://cultplayground.org'
+export const backendBaseURL = 'http://localhost:8042' // for programming and testing
 
 // http://localhost:8042/api/v1/getgameproposals
 
@@ -10,7 +10,7 @@ export const CultGames = writable([
   {
     id: 0,
     rating: 10,
-    text: 'Ask your landlord if you are allowed to pay the rent via CULT or RVLT. Consider tweeting about it.',
+    text: 'Ask your landlord if you are allowed to pay the rent via CULT or RVLT. Consider tweeting about how he reacted.',
     utcDate: '2022-9-28',
   },
   {

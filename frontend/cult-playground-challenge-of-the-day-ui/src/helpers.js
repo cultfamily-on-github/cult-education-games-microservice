@@ -26,6 +26,11 @@ export const getFirstLinkInText = (text) => {
 
 
 export const replaceContentToShowClickableLinks = (content) => {
+
+    if (content.indexOf("https://") === -1) {
+        return content
+    }
+    
     var exp_match =
       /(\b(https?|):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
     var element_content = content.replace(

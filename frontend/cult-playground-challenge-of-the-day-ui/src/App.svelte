@@ -24,21 +24,23 @@
   let showPastGamesMode = false;
   let underConstructionMode = true;
   let visitorAlreadyProvedFancy = false;
-  let todayIsTheDate = "";
 
-  onMount(async () => {
+  const getDataInPlace = async () => {
     const response = await fetch(`${backendBaseURL}/api/v1/getgameproposals`);
-
     gameProposals = await response.json();
 
-    // currentGameOfTheDay = gameProposals[0];
-
     lastMomentOfToday = getLastMomentOfTodayFromDate(new Date());
-
     currentGameOfTheDay = gameProposals.filter(
       (e) => e.expiryDateUTC === lastMomentOfToday
     )[0];
-  });
+  };
+
+  onMount(getDataInPlace);
+
+  const handleReloadOfCultGameProposalsRecommended = async () => {
+    alert("super");
+    // await getDataInPlace();
+  };
 
   const changeShowDetails = () => {
     showDetails = !showDetails;
@@ -108,7 +110,7 @@
     {#if lastMomentOfToday}
       {lastMomentOfToday.substr(0, 10)}
       <a href="https://time.is/UTC" target="_blank" style="color: white;">
-         UTC</a
+        UTC</a
       >
     {/if}
     <p><br /></p>
@@ -139,7 +141,9 @@
         Add Game Proposal
       </button>
       {#if showMasterMode}
-        <MasterModeForm />
+        <MasterModeForm
+          on:reload-of-gameproposals-recommended={handleReloadOfCultGameProposalsRecommended}
+        />
       {/if}
 
       <p><br /></p>

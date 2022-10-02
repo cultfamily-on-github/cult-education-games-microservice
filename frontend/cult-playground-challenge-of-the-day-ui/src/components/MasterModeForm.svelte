@@ -1,6 +1,7 @@
 <script>
   import { backendBaseURL } from "../stores";
   import Card from "./Card.svelte";
+  import {createEventDispatcher} from 'svelte'
 
   let text = "";
   let masterKey = "";
@@ -27,6 +28,9 @@
 
       text = "";
       masterKey = "";
+
+      // const dispatch = createEventDispatcher()
+      // dispatch('reload-of-gameproposals-recommended')
 
     } catch (error) {
       alert(`an error occurred: ${error.message}`);
