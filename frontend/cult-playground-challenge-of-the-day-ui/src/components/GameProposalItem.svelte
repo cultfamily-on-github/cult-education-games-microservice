@@ -32,7 +32,9 @@
       
       console.log("debug milestone 2")
       message = result.message;
-      item.rating = result.newRatingOfProposal;
+      if (result.newRatingOfProposal !== undefined) {
+        item.rating = result.newRatingOfProposal;
+      }
       masterOrApprenticeKey = "";
 
     } catch (error) {
