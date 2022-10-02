@@ -90,7 +90,7 @@ export class GameProposalOrganizer {
         const existingVoteOnGameProposal = votes.filter((v: IVote) => v.id === voteInbound.id && v.voteBy === voteBy)[0]
 
         if (existingVoteOnGameProposal !== undefined) {
-            throw new Error(`you have already voted on this proposal. you gave it a ${existingVoteOnGameProposal.rating}.`)
+            throw new Error(`you have already voted on this proposal. you gave it a ${existingVoteOnGameProposal.rating} earlier.`)
         }
 
         console.log(`adding vote on game proposal ${JSON.stringify(voteInbound)}`)
@@ -123,9 +123,10 @@ export class GameProposalOrganizer {
 
         for (const vote of votes) {
 
-            sum = sum + vote.rating
-
-            counter++
+            if (id === vote.id)  {
+                sum = sum + vote.rating   
+                counter++
+            }
         }
 
         const roundedAverageRating = Number((sum / counter).toFixed(1))
