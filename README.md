@@ -82,8 +82,8 @@ https://polygonscan.com/tx/0x75de42bddd54f562cc2a4360085d36ab546f73b249895ddebc7
 ### Act of Revolt ID
 1042
 
+I learned that I also submitted 1043 unintentionally which is why I gave [this duplicate alarm](https://twitter.com/Peer2peerE/status/1575805811259244546?s=20&t=mXeLAe7e_3TSC4I1bp8gZg). 
+
 ### Transaction of Reward
 https://polygonscan.com/tx/0x109d2d1cce0252216cd5405b31c7198c1698dfea69e20e574d806e5ac9e2ba93. Thank You Fellows.
-
-![Screenshot 2022-10-02 at 02 44 47](https://user-images.githubusercontent.com/43786652/193433275-54de877f-aa7e-4c9f-8bf6-a97d1e0a14b7.png)
 
