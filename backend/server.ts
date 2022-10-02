@@ -65,8 +65,8 @@ if (Deno.args[0] === undefined) {
 
 	} else {
 
-		const pathToCertFile = `${PersistenceService.pathToCertificates}/fullchain.pem`
-		const pathToKeyFile = `${PersistenceService.pathToCertificates}/privkey.pem`
+		const pathToCertFile = `${persistenceService.pathToCertificates}/fullchain.pem`
+		const pathToKeyFile = `${persistenceService.pathToCertificates}/privkey.pem`
 
 		console.log(`reading cert file from ${pathToCertFile}`);
 		console.log(`reading key file from ${pathToKeyFile}`);
