@@ -49,6 +49,7 @@
   const clickValue = (valueClicked) => {
     item.currentVisitorsVoteForItem = valueClicked;
   };
+
 </script>
 
 <Card>

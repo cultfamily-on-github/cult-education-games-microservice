@@ -10,14 +10,16 @@
   import { fade, scale } from "svelte/transition";
   import { onMount } from "svelte";
   import { getLastMomentOfTodayFromDate, getDateFromString } from "./helpers";
-  import { backendBaseURL } from "./stores";
+  import { backendBaseURL, cultBeastBackendBaseURL } from "./stores";
 
   let gameProposals = [];
+  let learningOpportunities = [];
   let currentGameOfTheDay;
   let lastMomentOfToday;
   let showDetails = false;
   let showPhilosophy = false;
   let showMasterMode = false;
+  let showSuperVisedLearning = false;
   let showProposalsMode = false;
   let showPastGamesMode = false;
 
@@ -30,6 +32,13 @@
     currentGameOfTheDay = gameProposals.filter(
       (e) => e.expiryDateUTC.substr(0, 10) === lastMomentOfToday.substr(0, 10)
     )[0];
+
+    setTimeout(async () => {
+      const url = `${cultBeastBackendBaseURL}/api/v1/getLearningOpportunities`;
+      console.log(`fetching learning opportunities from ${url}`);
+      const response = await fetch(url);
+      learningOpportunities = await response.json();
+    }, 1000 * 2); // waiting 2 seconds with this request for a superquick landingpage delivery
   };
 
   onMount(getDataInPlace);
@@ -46,6 +55,7 @@
       showProposalsMode = false;
       showMasterMode = false;
       showPastGamesMode = false;
+      showSuperVisedLearning = false;
     }
   };
 
@@ -55,7 +65,7 @@
       showDetails = false;
       showProposalsMode = false;
       showMasterMode = false;
-      showPastGamesMode = false;
+      showSuperVisedLearning = false;
     }
   };
 
@@ -65,7 +75,7 @@
       showDetails = false;
       showPhilosophy = false;
       showMasterMode = false;
-      showPastGamesMode = false;
+      showSuperVisedLearning = false;
     }
   };
 
@@ -76,6 +86,7 @@
       showPhilosophy = false;
       showMasterMode = false;
       showProposalsMode = false;
+      showSuperVisedLearning = false;
     }
   };
 
@@ -86,6 +97,18 @@
       showPhilosophy = false;
       showProposalsMode = false;
       showPastGamesMode = false;
+      showSuperVisedLearning = false;
+    }
+  };
+
+  const changeShowSuperVisedLearning = () => {
+    showSuperVisedLearning = !showSuperVisedLearning;
+    if (showMasterMode) {
+      showDetails = false;
+      showPhilosophy = false;
+      showProposalsMode = false;
+      showPastGamesMode = false;
+      showMasterMode = false;
     }
   };
 </script>
@@ -164,6 +187,22 @@
             <GameOfThePastItem item={fb} />
           </div>
         {/if}
+      {/each}
+      <p><br /></p>
+      {/if}
+      
+      <p><br /></p>
+      
+      <button on:click={() => changeShowSuperVisedLearning()}>
+        CULT Beast Learning Opportunities
+      </button>
+      {#if showSuperVisedLearning}
+      <p><br /></p>
+      Under Construction ... 
+      {#each learningOpportunities as learningOpportunities}
+        <p><br /></p>
+        {JSON.stringify(learningOpportunities)}
+        <p><br /></p>
       {/each}
       <p><br /></p>
     {/if}
