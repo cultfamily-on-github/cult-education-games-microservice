@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 
 export const backendBaseURL = 'https://cultplayground.org' // might be replaced by on-chain backend one day
-export const cultBeastBackendBaseURL = 'http://cultmagazine.org:3002' // might be replaced by on-chain backend one day
+export const cultBeastBackendBaseURL = 'https://cultmagazine.org:8443' // might be replaced by on-chain backend one day
 
 // https://cultplayground.org/api/v1/getgameproposals
 // https://cultplayground.org/api/v1/getgameproposals
