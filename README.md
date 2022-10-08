@@ -1,20 +1,25 @@
 # CULT Education Games Microservice
 
-The [cultplayground.org](https://cultplayground.org) allows for coordinated community based micro acts acts of revolt.
-
-Our power is massive when we collaborate. 
+The [cultplayground.org](https://cultplayground.org) allows for coordinated community based micro acts of revolt. Our power is massive when we collaborate. 
 
 Let us play and learn together in playful creativity to free the world.
-
 The games which can be found here might inspire people to inspire their friends to
 invest in CULT & RVLT early.
 
-Everyone is invited to support the emergence of manifold architectures of freedom by contributing to this repository.
-
-Play 2 Earn is inspired by [Revolt 2 Earn](https://rumble.com/v1lf3yb-revolt-2-earn-in-100-seconds-michael-saylor-talks-about-revolt-2-earn.html?mref=1e5w3p&mc=4izal). 
-
+Everyone is invited to support the emergence of manifold architectures of freedom by contributing to this repository. Play 2 Earn is inspired by [Revolt 2 Earn](https://rumble.com/v1lf3yb-revolt-2-earn-in-100-seconds-michael-saylor-talks-about-revolt-2-earn.html?mref=1e5w3p&mc=4izal). 
 
 In order to strengthen resilience, scalability and technological freedom for contributors, we establish a microservices architecture. 
+
+In order to increase the intelligence of our movement we learn from systems which can be assumed to be much more intelligent than the sum of their parts - e.g. considering the human brain. In order to do so we build tools which help us composing the following aspects in manifold ways so that those aspects play a beautiful concert which will make criminals shiver and lovers dance. 
+
+1. increase the density and size of the network (Cortex)  
+2. foster regular arousals (Formatio reticularis)
+3. ensure clear, transparent, reasonable (somewhat merciful) judgement (Limbic system)
+
+
+Thank You [Peter Kruse](https://www.youtube.com/watch?v=WIMcAQRCuR4). 
+
+
 
 ## Status
 First Drafts & Idea Collection
