@@ -54,7 +54,6 @@
       showProposalsMode = false;
       showMasterMode = false;
       showPastGamesMode = false;
-
     }
   };
 
@@ -64,6 +63,7 @@
       showDetails = false;
       showProposalsMode = false;
       showMasterMode = false;
+      showPastGamesMode = false;
     }
   };
 
@@ -73,6 +73,7 @@
       showDetails = false;
       showPhilosophy = false;
       showMasterMode = false;
+      showPastGamesMode = false;
     }
   };
 
