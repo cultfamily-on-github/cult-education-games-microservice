@@ -1,7 +1,6 @@
 # CULT Education Games Microservice
 
-The [cultplayground.org](https://cultplayground.org) allows for coordinated community based micro acts acts of revolt.
-Our power is massive when we collaborate. 
+The [cultplayground.org](https://cultplayground.org) allows for coordinated community based micro acts of revolt. Our power is massive when we collaborate. 
 
 Let us play and learn together in playful creativity to free the world.
 The games which can be found here might inspire people to inspire their friends to
