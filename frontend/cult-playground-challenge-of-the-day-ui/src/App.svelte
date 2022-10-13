@@ -179,7 +179,8 @@
       
       <p><br /></p>
 
-      <a href="https://t.me/cultmagazine_bot" target="_blank">
+      <!-- <a href="https://t.me/cultmagazine_bot" target="_blank"> -->
+      <a href="https://cultbeast.org" target="_blank">
         <button>
           Visit the CULT Beast
         </button>
